@@ -1,25 +1,22 @@
 using Unity.Entities;
 using Unity.VisualScripting;
-using UnityEngine;
 
-namespace _GameLogic.Core.GameStates.Systems
+namespace _GameLogic.Loading.Systems
 {
     public partial class LoadingScreenHandlingSystem : SystemBase
     {
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<GameState>();
-            RequireForUpdate<LoadingScreenData>();
+            RequireForUpdate<LoadingStateProcess>();
         }
 
         protected override void OnUpdate()
         {
-            var gameStateEntity = SystemAPI.GetSingletonEntity<GameState>();
-
-            if (SystemAPI.HasComponent<LoadingScreenData>(gameStateEntity))
+            //if (!Singleton<LoadingSceneUIContainer>.instantiated) return;
+            
+            foreach (var data in SystemAPI.Query<LoadingStateProcess>())
             {
-                var data = SystemAPI.GetComponentRW<LoadingScreenData>(gameStateEntity).ValueRW;
                 var loadingSceneUIContainer = Singleton<LoadingSceneUIContainer>.instance;
                 loadingSceneUIContainer.BarFillingImage.fillAmount = data.Progress;
                 loadingSceneUIContainer.LoadingProgressText.SetText("{0:0}", data.Progress * 100);
