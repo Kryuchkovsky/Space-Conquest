@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Core.GameStates.Systems
 {
-    public partial class GalaxyGeneratingSystem : SystemBase
+    public partial class GalaxyLoadingSystem : SystemBase
     {
         private readonly float _loadingDuration = 1;
 
@@ -42,7 +42,7 @@ namespace _GameLogic.Core.GameStates.Systems
                 var galaxyGenerationRequestEntity = EntityManager.CreateEntity();
                 ecb.AddComponent(galaxyGenerationRequestEntity, new GalaxyGenerationRequest
                 {
-                    StarSystemsNumber = 10000
+                    StarSystemsNumber = 1000
                 });
             }
         }

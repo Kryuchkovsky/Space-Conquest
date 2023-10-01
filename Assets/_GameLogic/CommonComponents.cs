@@ -1,7 +1,8 @@
-﻿namespace _GameLogic
+﻿using Unity.Entities;
+
+namespace _GameLogic
 {
-    public class CommonComponents
+    public struct IsPerforming : IComponentData, IEnableableComponent
     {
-        
     }
 }

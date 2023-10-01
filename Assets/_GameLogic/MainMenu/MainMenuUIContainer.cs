@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace _GameLogic.MainMenu
 {
     [Singleton]
-    public class MainMenuUIContainerAuthoring : MonoBehaviour, ISingleton
+    public class MainMenuUIContainer : MonoBehaviour, ISingleton
     {
         private EntityManager _entityManager;
         

@@ -10,7 +10,7 @@ namespace _GameLogic.Gameplay.Galaxy
             public override void Bake(GameResourcesAuthoring authoring)
             {
                 var entity = GetEntity(authoring.transform, TransformUsageFlags.WorldSpace);
-                AddComponent<Galaxy>(entity);
+                AddComponent<IsGalaxy>(entity);
             }
         }
     }

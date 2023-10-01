@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _GameLogic.Core.GameStates
+namespace _GameLogic.Loading
 {
     [Singleton]
     public class LoadingSceneUIContainer : MonoBehaviour, ISingleton

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Unity.Entities;
 
 namespace _GameLogic.Loading
 {
-    public class Components : MonoBehaviour
+    public struct LoadingStateProcess : IComponentData
     {
-        
+        public float Progress;
+        public float LoadingTime;
     }
 }

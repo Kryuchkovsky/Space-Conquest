@@ -6,6 +6,7 @@ namespace _GameLogic.Gameplay.Galaxy
 {
     public class GameResourcesAuthoring : MonoBehaviour
     {
+        [field: SerializeField] public GalaxyAuthoring GalaxyAuthoring { get; private set; }
         [field: SerializeField] public StarSystemAuthoring StarSystemAuthoring { get; private set; }
         
         private class Baker : Baker<GameResourcesAuthoring>
@@ -15,6 +16,7 @@ namespace _GameLogic.Gameplay.Galaxy
                 var entity = GetEntity(authoring.transform, TransformUsageFlags.None);
                 AddComponent(entity, new GameResourcesData
                 {
+                    GalaxyPrefab = GetEntity(authoring.GalaxyAuthoring, TransformUsageFlags.None),
                     StarSystemPrefab = GetEntity(authoring.StarSystemAuthoring, TransformUsageFlags.None)
                 });
             }

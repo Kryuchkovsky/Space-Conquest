@@ -1,48 +1,51 @@
-﻿using Unity.Entities;
+﻿using _GameLogic.Loading;
+using Unity.Entities;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Core.GameStates.Systems
 {
     public partial class MainMenuLoadingSystem : SystemBase
     {
-        private readonly float _loadingDuration = 3;
-        private float _loadingTime;
-        
+        private readonly float _loadingDuration = 1;
+
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<GameState>();
-            RequireForUpdate<LoadingScreenData>();
-            World.EntityManager.CreateSingleton<GameState>();
-            var entity = SystemAPI.GetSingletonEntity<GameState>();
-            EntityManager.AddComponent<LoadingScreenData>(entity);
-            _loadingTime = 0;
+            RequireForUpdate<IsStateMachine>();
+            RequireForUpdate<IsMainMenuState>();
+            RequireForUpdate<LoadingStateProcess>();
+        }
+
+        protected override void OnStartRunning()
+        {
+            base.OnStartRunning();
+            var entity = SystemAPI.GetSingletonEntity<IsStateMachine>();
+            EntityManager.SetComponentData(entity, new LoadingStateProcess
+            {
+                Progress = 0,
+                LoadingTime = 0
+            });
         }
 
         protected override void OnUpdate()
         {
-            var gameStateEntity = SystemAPI.GetSingletonEntity<GameState>();
-
-            if (EntityManager.HasComponent<LoadingScreenData>(gameStateEntity))
+            foreach (var (loadingStateProcess, entity) in SystemAPI.Query<LoadingStateProcess>()
+                         .WithAll<IsMainMenuState>().WithEntityAccess())
             {
-                var data = EntityManager.GetComponentData<LoadingScreenData>(gameStateEntity);
-                var progress = math.clamp(_loadingTime / _loadingDuration, 0, 1);
+                var data = loadingStateProcess;
+                var progress = math.clamp(data.LoadingTime / _loadingDuration, 0, 1);
                 data.Progress = progress;
-                var loadingSceneUIContainer = Singleton<LoadingSceneUIContainer>.instance;
-                loadingSceneUIContainer.BarFillingImage.fillAmount = progress;
-                loadingSceneUIContainer.LoadingProgressText.SetText("{0:0}", progress * 100);
 
-                if (_loadingTime < _loadingDuration)
+                if (data.LoadingTime < _loadingDuration)
                 {
-                    _loadingTime += SystemAPI.Time.DeltaTime;
-                    EntityManager.SetComponentData(gameStateEntity, data);
+                    data.LoadingTime += SystemAPI.Time.DeltaTime;
+                    EntityManager.SetComponentData(entity, data);
                 }
                 else
                 {
-                    SceneManager.LoadScene(1);
-                    EntityManager.RemoveComponent<LoadingScreenData>(gameStateEntity);
+                    var operation = SceneManager.LoadSceneAsync(1);
+                    operation.completed += _ => EntityManager.RemoveComponent<LoadingStateProcess>(entity);
                 }
             }
         }

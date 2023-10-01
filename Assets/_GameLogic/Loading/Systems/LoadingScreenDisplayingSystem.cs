@@ -1,9 +1,10 @@
 using Unity.Entities;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace _GameLogic.Loading.Systems
 {
-    public partial class LoadingScreenHandlingSystem : SystemBase
+    public partial class LoadingScreenDisplayingSystem : SystemBase
     {
         protected override void OnCreate()
         {
@@ -13,8 +14,6 @@ namespace _GameLogic.Loading.Systems
 
         protected override void OnUpdate()
         {
-            //if (!Singleton<LoadingSceneUIContainer>.instantiated) return;
-            
             foreach (var data in SystemAPI.Query<LoadingStateProcess>())
             {
                 var loadingSceneUIContainer = Singleton<LoadingSceneUIContainer>.instance;

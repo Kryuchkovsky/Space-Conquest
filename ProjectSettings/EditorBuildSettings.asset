@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_GameDesign/Scenes/[1]MainMenuScene.unity
     guid: 557766299d9ad5149bc7d766be757bdc
+  - enabled: 1
+    path: Assets/_GameDesign/Scenes/[2]GalaxyScene.unity
+    guid: 348f7349cba17774faa5d102313b41bb
+  - enabled: 1
+    path: Assets/_GameDesign/Scenes/[3]StarSystemScene.unity
+    guid: d8615503cf6e72d4a96d246579723b2b
   m_configObjects: {}
