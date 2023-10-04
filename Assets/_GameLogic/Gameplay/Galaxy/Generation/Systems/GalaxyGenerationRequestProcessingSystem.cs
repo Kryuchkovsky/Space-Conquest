@@ -1,19 +1,18 @@
-﻿using _GameLogic.Extensions.GalaxyGenerator;
+﻿using _GameLogic.GalaxyGenerator;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
 {
     public partial class GalaxyGenerationRequestProcessingSystem : SystemBase
     {
-        private GalaxyGenerator _galaxyGenerator;
+        private GalaxyGenerator.GalaxyGenerator _galaxyGenerator;
         
         protected override void OnCreate()
         {
             base.OnCreate();
-            _galaxyGenerator = new GalaxyGenerator();
+            _galaxyGenerator = new GalaxyGenerator.GalaxyGenerator();
             RequireForUpdate<GameResourcesData>();
             RequireForUpdate<GalaxyGenerationRequest>();
         }

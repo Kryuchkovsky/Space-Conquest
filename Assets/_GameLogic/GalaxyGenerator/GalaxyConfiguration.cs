@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Drawing;
 
-namespace _GameLogic.Extensions.GalaxyGenerator
+namespace _GameLogic.GalaxyGenerator
 {
 	public class GalaxyConfiguration
 	{
@@ -30,6 +31,16 @@ namespace _GameLogic.Extensions.GalaxyGenerator
 			RandomOffsetOnAxis = randomOffsetOnAxis;
 			ArmSeparationDistance = 2 * (float)Math.PI / NumberOfArms;
 			Scale = scale;
+		}
+	}
+
+	public class StarSystemData
+	{
+		public PointF Position { get; private set; }
+		
+		public StarSystemData(PointF position)
+		{
+			Position = position;
 		}
 	}
 }
