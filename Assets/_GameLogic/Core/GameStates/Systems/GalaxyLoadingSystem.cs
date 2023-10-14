@@ -43,7 +43,7 @@ namespace _GameLogic.Core.GameStates.Systems
                 foreach (var (loadingState, entity) in SystemAPI
                              .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
                 {
-                    var data = loadingState.ValueRO;
+                    var data = loadingState;
                     data.SceneIsLoaded = true;
                     ecb.SetComponent(entity, data);
                 }
