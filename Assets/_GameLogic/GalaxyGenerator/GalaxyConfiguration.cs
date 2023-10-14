@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace _GameLogic.GalaxyGenerator
+namespace _GameLogic.Configs
 {
 	public class GalaxyConfiguration
 	{
@@ -21,7 +21,7 @@ namespace _GameLogic.GalaxyGenerator
 			float maxArmOffset = 0.9f, 
 			float rotationFactor = 5f, 
 			float randomOffsetOnAxis = 0.04f,
-			float scale = 1000)
+			float scale = 100)
 		{
 			Name = name;
 			NumberOfStars = numberOfStarsStars;
