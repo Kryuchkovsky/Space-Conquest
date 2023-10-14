@@ -1,5 +1,4 @@
 ﻿using _GameLogic.Gameplay.Galaxy.Generation;
-using _GameLogic.Loading;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine.SceneManagement;
@@ -13,9 +12,9 @@ namespace _GameLogic.Core.GameStates.Systems
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<IsStateMachine>();
-            RequireForUpdate<IsGameState>();
-            RequireForUpdate<LoadingStateProcess>();
+            RequireForUpdate<StateMachine>();
+            RequireForUpdate<GameState>();
+            RequireForUpdate<LoadingState>();
         }
 
         protected override void OnStartRunning()
@@ -25,20 +24,38 @@ namespace _GameLogic.Core.GameStates.Systems
             var gameSceneLoadingOperation = SceneManager.LoadSceneAsync(2);
             gameSceneLoadingOperation.completed += _ =>
             {
+                foreach (var (gameState, entity) in SystemAPI
+                             .Query<GameState>().WithAll<StateMachine, LoadingState>().WithEntityAccess())
+                { 
+                    var data = gameState; 
+                    data.SceneIsLoaded = true; 
+                    EntityManager.SetComponentData(entity, data);
+                }
             };
             
             var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
             loadingSceneLoadingOperation.completed += _ =>
             {
+                var ecb = SystemAPI
+                    .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
+                    .CreateCommandBuffer(World.Unmanaged);
+                
+                foreach (var (loadingState, entity) in SystemAPI
+                             .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
+                {
+                    var data = loadingState.ValueRO;
+                    data.SceneIsLoaded = true;
+                    ecb.SetComponent(entity, data);
+                }
             };
-            
-            var ecb = SystemAPI
-                .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(World.Unmanaged);
 
-            foreach (var (loadingStateProcess, entity) in SystemAPI
-                         .Query<LoadingStateProcess>().WithAll<IsStateMachine, IsGameState>().WithEntityAccess())
+            foreach (var (loadingState, entity) in SystemAPI
+                         .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
             {
+                var ecb = SystemAPI
+                    .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
+                    .CreateCommandBuffer(World.Unmanaged);
+                
                 var galaxyGenerationRequestEntity = EntityManager.CreateEntity();
                 ecb.AddComponent(galaxyGenerationRequestEntity, new GalaxyGenerationRequest
                 {
@@ -54,7 +71,7 @@ namespace _GameLogic.Core.GameStates.Systems
                 .CreateCommandBuffer(World.Unmanaged);
             
             foreach (var (loadingStateProcess, entity) in SystemAPI
-                         .Query<LoadingStateProcess>().WithAll<IsStateMachine, IsGameState>().WithEntityAccess())
+                         .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
             {
                 var data = loadingStateProcess;
                 var progress = math.clamp(data.LoadingTime / _loadingDuration, 0, 1);
@@ -67,8 +84,11 @@ namespace _GameLogic.Core.GameStates.Systems
                 }
                 else
                 {
-                    ecb.RemoveComponent<LoadingStateProcess>(entity);
-                    SceneManager.UnloadSceneAsync(0);
+                    ecb.RemoveComponent<LoadingState>(entity);
+                    var loadingSceneUnLoadingOperation = SceneManager.UnloadSceneAsync(0);
+                    loadingSceneUnLoadingOperation.completed += _ =>
+                    {
+                    };
                 }
             }
         }

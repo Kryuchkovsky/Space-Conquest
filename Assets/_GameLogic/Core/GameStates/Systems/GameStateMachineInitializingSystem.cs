@@ -9,9 +9,9 @@ namespace _GameLogic.Core.GameStates.Systems
         {
             base.OnStartRunning();
             
-            var entity = EntityManager.CreateSingleton<IsStateMachine>();
-            EntityManager.AddComponent<IsMainMenuState>(entity);
-            EntityManager.AddComponent<LoadingStateProcess>(entity);
+            var entity = EntityManager.CreateSingleton<StateMachine>();
+            EntityManager.AddComponent<MainMenuState>(entity);
+            EntityManager.AddComponent<LoadingState>(entity);
         }
 
         protected override void OnUpdate()
