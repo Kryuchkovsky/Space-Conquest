@@ -23,12 +23,12 @@ namespace _GameLogic.Core.GameStates.Systems
                 ecb.DestroyEntity(entity);
             }
             
-            foreach (var (isStateMachine, entity) in  SystemAPI.Query<IsStateMachine>()
-                         .WithAll<IsMainMenuState>().WithNone<IsGameState, LoadingStateProcess>().WithEntityAccess())
+            foreach (var (isStateMachine, entity) in  SystemAPI.Query<StateMachine>()
+                         .WithAll<MainMenuState>().WithNone<GameState, LoadingState>().WithEntityAccess())
             {
-                ecb.RemoveComponent<IsMainMenuState>(entity);
-                ecb.AddComponent<IsGameState>(entity);
-                ecb.AddComponent<LoadingStateProcess>(entity);
+                ecb.RemoveComponent<MainMenuState>(entity);
+                ecb.AddComponent<GameState>(entity);
+                ecb.AddComponent<LoadingState>(entity);
             }
         }
     }

@@ -12,26 +12,27 @@ namespace _GameLogic.Core.GameStates.Systems
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<IsStateMachine>();
-            RequireForUpdate<IsMainMenuState>();
-            RequireForUpdate<LoadingStateProcess>();
+            RequireForUpdate<StateMachine>();
+            RequireForUpdate<MainMenuState>();
+            RequireForUpdate<LoadingState>();
         }
 
         protected override void OnStartRunning()
         {
             base.OnStartRunning();
-            var entity = SystemAPI.GetSingletonEntity<IsStateMachine>();
-            EntityManager.SetComponentData(entity, new LoadingStateProcess
+            var entity = SystemAPI.GetSingletonEntity<StateMachine>();
+            EntityManager.SetComponentData(entity, new LoadingState
             {
                 Progress = 0,
-                LoadingTime = 0
+                LoadingTime = 0,
+                SceneIsLoaded = true
             });
         }
 
         protected override void OnUpdate()
         {
-            foreach (var (loadingStateProcess, entity) in SystemAPI.Query<LoadingStateProcess>()
-                         .WithAll<IsMainMenuState>().WithEntityAccess())
+            foreach (var (loadingStateProcess, entity) in SystemAPI.Query<LoadingState>()
+                         .WithAll<MainMenuState>().WithEntityAccess())
             {
                 var data = loadingStateProcess;
                 var progress = math.clamp(data.LoadingTime / _loadingDuration, 0, 1);
@@ -45,7 +46,14 @@ namespace _GameLogic.Core.GameStates.Systems
                 else
                 {
                     var operation = SceneManager.LoadSceneAsync(1);
-                    operation.completed += _ => EntityManager.RemoveComponent<LoadingStateProcess>(entity);
+                    operation.completed += _ =>
+                    {
+                        EntityManager.RemoveComponent<LoadingState>(entity);
+                        EntityManager.SetComponentData(entity, new MainMenuState
+                        {
+                            SceneIsLoaded = true
+                        });
+                    };
                 }
             }
         }

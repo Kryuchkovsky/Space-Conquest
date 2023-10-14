@@ -1,6 +1,6 @@
+using _GameLogic.Core.GameStates;
 using Unity.Entities;
 using Unity.VisualScripting;
-using UnityEngine;
 
 namespace _GameLogic.Loading.Systems
 {
@@ -9,16 +9,19 @@ namespace _GameLogic.Loading.Systems
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<LoadingStateProcess>();
+            RequireForUpdate<LoadingState>();
         }
 
         protected override void OnUpdate()
         {
-            foreach (var data in SystemAPI.Query<LoadingStateProcess>())
+            foreach (var data in SystemAPI.Query<LoadingState>())
             {
-                var loadingSceneUIContainer = Singleton<LoadingSceneUIContainer>.instance;
-                loadingSceneUIContainer.BarFillingImage.fillAmount = data.Progress;
-                loadingSceneUIContainer.LoadingProgressText.SetText("{0:0}", data.Progress * 100);
+                if (data.SceneIsLoaded)
+                {
+                    var loadingSceneUIContainer = Singleton<LoadingSceneUIContainer>.instance;
+                    loadingSceneUIContainer.BarFillingImage.fillAmount = data.Progress;
+                    loadingSceneUIContainer.LoadingProgressText.SetText("{0:0}", data.Progress * 100);
+                }
             }
         }
     }

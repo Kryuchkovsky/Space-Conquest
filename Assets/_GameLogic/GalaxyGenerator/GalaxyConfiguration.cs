@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace _GameLogic.Configs
+namespace _GameLogic.GalaxyGenerator
 {
 	public class GalaxyConfiguration
 	{
