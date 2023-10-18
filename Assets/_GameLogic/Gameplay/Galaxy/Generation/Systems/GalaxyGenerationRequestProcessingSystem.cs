@@ -1,51 +1,43 @@
-﻿using _GameLogic.GalaxyGenerator;
-using Unity.Entities;
+﻿using _GameLogic.Extensions.Configs;
+using _GameLogic.GalaxyGenerator;
+using Scellecs.Morpeh;
+using Scellecs.Morpeh.Systems;
+using Unity.IL2CPP.CompilerServices;
 using Unity.Mathematics;
-using Unity.Transforms;
+using UnityEngine;
 
 namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
 {
-    public partial class GalaxyGenerationRequestProcessingSystem : SystemBase
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/Generation/" + nameof(GalaxyGenerationRequestProcessingSystem))]
+    public class GalaxyGenerationRequestProcessingSystem : UpdateSystem
     {
-        private GalaxyGenerator.GalaxyGenerator _galaxyGenerator;
-        
-        protected override void OnCreate()
+        private Request<GalaxyGenerationRequest> _galaxyGenerationRequest;
+        private GalaxyGenerationManager _galaxyGenerationManager;
+
+        public override void OnAwake()
         {
-            base.OnCreate();
-            _galaxyGenerator = new GalaxyGenerator.GalaxyGenerator();
-            RequireForUpdate<GameResourcesData>();
-            RequireForUpdate<GalaxyGenerationRequest>();
+            _galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
+            _galaxyGenerationManager = new GalaxyGenerationManager();
         }
 
-        protected override void OnUpdate()
+        public override void OnUpdate(float deltaTime)
         {
-            var ecb = SystemAPI
-                .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(World.Unmanaged);
-            var gameResourcesData = SystemAPI.GetSingleton<GameResourcesData>();
-
-            foreach (var (request, entity) in SystemAPI.Query<GalaxyGenerationRequest>().WithEntityAccess())
+            foreach (var request in _galaxyGenerationRequest.Consume())
             {
-                var galaxyEntity = ecb.Instantiate(gameResourcesData.GalaxyPrefab);
+                var catalog = ConfigManager.GetConfig<GameResourcesCatalog>();
+                var galaxy = Instantiate(catalog.GalaxyPrefab);
                 var galaxyConfiguration = new GalaxyConfiguration("Galaxy", request.StarSystemsNumber, 4, 1.05f, 5, 0.05f);
-                _galaxyGenerator.Configuration = galaxyConfiguration;
-                var points = _galaxyGenerator.GenerateSimpleGalaxy();
+                _galaxyGenerationManager.Configuration = galaxyConfiguration;
+                var points = _galaxyGenerationManager.GenerateSimpleGalaxy();
 
                 foreach (var point in points)
                 {
-                    var starSystemEntity = ecb.Instantiate(gameResourcesData.StarSystemPrefab);
-                    ecb.AddComponent(starSystemEntity, new Parent
-                    {
-                        Value = galaxyEntity
-                    });
-                    ecb.SetComponent(starSystemEntity, new LocalTransform()
-                    {
-                        Position = new float3(point.X, 0, point.Y),
-                        Scale = 1
-                    });
+                    var position = new Vector3(point.X, 0, point.Y);
+                    var starSystem = Instantiate(catalog.StarSystemPrefab, position, quaternion.identity, galaxy.transform);
                 }
-                
-                ecb.DestroyEntity(entity);
             }
         }
     }

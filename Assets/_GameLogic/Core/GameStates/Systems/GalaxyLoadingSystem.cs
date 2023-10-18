@@ -1,94 +1,60 @@
 ﻿using _GameLogic.Gameplay.Galaxy.Generation;
-using Unity.Entities;
+using Scellecs.Morpeh;
+using Scellecs.Morpeh.Systems;
+using Unity.IL2CPP.CompilerServices;
 using Unity.Mathematics;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Core.GameStates.Systems
 {
-    public partial class GalaxyLoadingSystem : SystemBase
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [CreateAssetMenu(menuName = "ECS/Systems/Core/GameStates/" + nameof(GalaxyLoadingSystem))]
+    public class GalaxyLoadingSystem : UpdateSystem
     {
+        private FilterBuilder _filterBuilder;
         private readonly float _loadingDuration = 1;
 
-        protected override void OnCreate()
+        public override void OnAwake()
         {
-            base.OnCreate();
-            RequireForUpdate<StateMachine>();
-            RequireForUpdate<GameState>();
-            RequireForUpdate<LoadingState>();
+            _filterBuilder = World.Filter.With<StateMachine>().With<PlayState>().With<LoadingState>();
         }
 
-        protected override void OnStartRunning()
+        public override void OnUpdate(float deltaTime)
         {
-            base.OnStartRunning();
-
-            var gameSceneLoadingOperation = SceneManager.LoadSceneAsync(2);
-            gameSceneLoadingOperation.completed += _ =>
+            foreach (var entity in _filterBuilder.Build())
             {
-                foreach (var (gameState, entity) in SystemAPI
-                             .Query<GameState>().WithAll<StateMachine, LoadingState>().WithEntityAccess())
-                { 
-                    var data = gameState; 
-                    data.SceneIsLoaded = true; 
-                    EntityManager.SetComponentData(entity, data);
-                }
-            };
-            
-            var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
-            loadingSceneLoadingOperation.completed += _ =>
-            {
-                var ecb = SystemAPI
-                    .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                    .CreateCommandBuffer(World.Unmanaged);
+                ref var gameState = ref entity.GetComponent<PlayState>();
                 
-                foreach (var (loadingState, entity) in SystemAPI
-                             .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
+                if (gameState.SceneIsLoaded && !gameState.GalaxyGenerationRequestIsCreated && !gameState.GalaxyIsCreated)
                 {
-                    var data = loadingState;
-                    data.SceneIsLoaded = true;
-                    ecb.SetComponent(entity, data);
+                    var galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
+                    galaxyGenerationRequest.Publish(new GalaxyGenerationRequest
+                    {
+                        StarSystemsNumber = 1000
+                    });
+                    gameState.GalaxyGenerationRequestIsCreated = true;
                 }
-            };
 
-            foreach (var (loadingState, entity) in SystemAPI
-                         .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
-            {
-                var ecb = SystemAPI
-                    .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                    .CreateCommandBuffer(World.Unmanaged);
-                
-                var galaxyGenerationRequestEntity = EntityManager.CreateEntity();
-                ecb.AddComponent(galaxyGenerationRequestEntity, new GalaxyGenerationRequest
+                ref var loadingState = ref entity.GetComponent<LoadingState>();
+                var progress = math.clamp(loadingState.LoadingTime / _loadingDuration, 0, 1);
+                loadingState.Progress = progress;
+
+                if (loadingState.LoadingTime < _loadingDuration)
                 {
-                    StarSystemsNumber = 1000
-                });
-            }
-        }
-
-        protected override void OnUpdate()
-        {
-            var ecb = SystemAPI
-                .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(World.Unmanaged);
-            
-            foreach (var (loadingStateProcess, entity) in SystemAPI
-                         .Query<LoadingState>().WithAll<StateMachine, GameState>().WithEntityAccess())
-            {
-                var data = loadingStateProcess;
-                var progress = math.clamp(data.LoadingTime / _loadingDuration, 0, 1);
-                data.Progress = progress;
-
-                if (data.LoadingTime < _loadingDuration)
-                {
-                    data.LoadingTime += SystemAPI.Time.DeltaTime;
-                    ecb.SetComponent(entity, data);
+                    loadingState.LoadingTime += deltaTime;
                 }
                 else
                 {
-                    ecb.RemoveComponent<LoadingState>(entity);
-                    var loadingSceneUnLoadingOperation = SceneManager.UnloadSceneAsync(0);
-                    loadingSceneUnLoadingOperation.completed += _ =>
+                    entity.RemoveComponent<LoadingState>();
+                    
+                    if (SceneManager.GetSceneByBuildIndex(1).isLoaded)
                     {
-                    };
+                        var loadingSceneUnloadingOperation = SceneManager.UnloadSceneAsync(1);
+                        loadingSceneUnloadingOperation.completed += _ => { };
+                    }
                 }
             }
         }

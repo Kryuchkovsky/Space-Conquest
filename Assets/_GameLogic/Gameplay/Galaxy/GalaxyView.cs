@@ -1,17 +1,9 @@
-﻿using Unity.Entities;
-using UnityEngine;
+﻿using Scellecs.Morpeh.Providers;
 
 namespace _GameLogic.Gameplay.Galaxy
 {
-    public class GalaxyAuthoring : MonoBehaviour
+    public class GalaxyView : MonoProvider<IsGalaxy>
     {
-        private class Baker : Baker<GameResourcesAuthoring>
-        {
-            public override void Bake(GameResourcesAuthoring authoring)
-            {
-                var entity = GetEntity(authoring.transform, TransformUsageFlags.WorldSpace);
-                AddComponent<IsGalaxy>(entity);
-            }
-        }
+
     }
 }

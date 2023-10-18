@@ -1,21 +1,27 @@
-﻿using _GameLogic.Common;
-using Unity.Entities;
+﻿using Scellecs.Morpeh;
+using Scellecs.Morpeh.Systems;
+using Unity.IL2CPP.CompilerServices;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
 {
-    public partial class StarSystemMapOpeningSystem : SystemBase
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/StarSystems/" + nameof(StarSystemMapOpeningSystem))]
+    public class StarSystemMapOpeningSystem : UpdateSystem
     {
-        protected override void OnCreate()
+        private Event<StarSystemClickEvent> _clickEvent;
+
+        public override void OnAwake()
         {
-            base.OnCreate();
-            RequireForUpdate<StarSystem>();
-            RequireForUpdate<ClickEvent>();
+            _clickEvent = World.GetEvent<StarSystemClickEvent>();
         }
 
-        protected override void OnUpdate()
+        public override void OnUpdate(float deltaTime)
         {
-            foreach (var (starSystem, entity) in SystemAPI.Query<StarSystem>().WithAll<ClickEvent>().WithEntityAccess())
+            foreach (var evt in _clickEvent.publishedChanges)           
             {
                 if (!SceneManager.GetSceneByBuildIndex(3).isLoaded)
                 {
@@ -24,11 +30,6 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                     {
                     };
                 }
-                
-                var ecb = SystemAPI
-                    .GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                    .CreateCommandBuffer(World.Unmanaged);
-                ecb.RemoveComponent<ClickEvent>(entity);
             }
         }
     }

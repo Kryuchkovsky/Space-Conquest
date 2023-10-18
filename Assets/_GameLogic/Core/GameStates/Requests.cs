@@ -1,7 +1,8 @@
-﻿namespace _GameLogic.Core.GameStates
+﻿using Scellecs.Morpeh;
+
+namespace _GameLogic.Core.GameStates
 {
-    public class Requests
+    public struct PlayStateSwitchingOnRequest : IRequestData
     {
-        
     }
 }

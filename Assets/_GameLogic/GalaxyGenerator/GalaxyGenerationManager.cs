@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace _GameLogic.GalaxyGenerator
 {
-    public class GalaxyGenerator
+    public class GalaxyGenerationManager
     {
         private const int FluctuationRate = 10;
         private const float DistanceBetweenSystems = 0.1f;
@@ -15,7 +15,7 @@ namespace _GameLogic.GalaxyGenerator
 
         public GalaxyConfiguration Configuration { get; set; }
 
-        public GalaxyGenerator(GalaxyConfiguration configuration = default, int seed = -1)
+        public GalaxyGenerationManager(GalaxyConfiguration configuration = default, int seed = -1)
         {
             Configuration = configuration;
 

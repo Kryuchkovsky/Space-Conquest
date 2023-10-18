@@ -2,13 +2,14 @@
 using Scellecs.Morpeh.Systems;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Core.GameStates.Systems
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    [CreateAssetMenu(menuName = "ECS/Systems/Core/GameStates/" + nameof(MainMenuLoadingSystem))]
+    [CreateAssetMenu(menuName = "ECS/Systems/Core/GameStates/" + nameof(PlayStateSwitchingOnRequestProcessingSystem))]
     public class PlayStateSwitchingOnRequestProcessingSystem : UpdateSystem
     {
         private FilterBuilder _stateMachineFilterBuilder;
@@ -17,7 +18,7 @@ namespace _GameLogic.Core.GameStates.Systems
 
         public override void OnAwake()
         {
-            _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<MainMenuState>().Without<LoadingState>();
+            _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<MainMenuState>().Without<PlayState>().Without<LoadingState>();
             _playStateSwitchingOnRequest = World.GetRequest<PlayStateSwitchingOnRequest>();
         }
 
@@ -28,8 +29,38 @@ namespace _GameLogic.Core.GameStates.Systems
                 foreach (var entity in  _stateMachineFilterBuilder.Build())
                 {
                     entity.RemoveComponent<MainMenuState>();
-                    entity.AddComponent<PlayState>();
-                    entity.AddComponent<LoadingState>();
+                    
+                    if (SceneManager.GetSceneByBuildIndex(2).isLoaded)
+                    {
+                        var mainMenuSceneUnloadingOperation = SceneManager.UnloadSceneAsync(2);
+                        mainMenuSceneUnloadingOperation.completed += _ => { };
+                    }
+                    
+                    var playState = new PlayState();
+
+                    if (!SceneManager.GetSceneByBuildIndex(3).isLoaded)
+                    {
+                        var galaxyMapSceneLoadingOperation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+                        galaxyMapSceneLoadingOperation.completed += _ =>
+                        {
+                            var galaxyMapScene = SceneManager.GetSceneByBuildIndex(3);
+                            SceneManager.SetActiveScene(galaxyMapScene);
+                        };
+                        playState.SceneIsLoaded = true;
+                    }
+                    
+                    entity.SetComponent(playState);
+                    
+                    var loadingState = new LoadingState();
+                    
+                    if (!SceneManager.GetSceneByBuildIndex(1).isLoaded)
+                    {
+                        var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+                        loadingSceneLoadingOperation.completed += _ => { };
+                        loadingState.SceneIsLoaded = true;
+                    }
+                    
+                    entity.SetComponent(loadingState);
                 }
             }
         }

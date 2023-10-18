@@ -1,59 +1,61 @@
-﻿using _GameLogic.Loading;
-using Unity.Entities;
+﻿using Scellecs.Morpeh;
+using Scellecs.Morpeh.Systems;
+using Unity.IL2CPP.CompilerServices;
 using Unity.Mathematics;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _GameLogic.Core.GameStates.Systems
 {
-    public partial class MainMenuLoadingSystem : SystemBase
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [CreateAssetMenu(menuName = "ECS/Systems/Core/GameStates/" + nameof(MainMenuLoadingSystem))]
+    public class MainMenuLoadingSystem : UpdateSystem
     {
+        private FilterBuilder _filterBuilder;
         private readonly float _loadingDuration = 1;
 
-        protected override void OnCreate()
+        public override void OnAwake()
         {
-            base.OnCreate();
-            RequireForUpdate<StateMachine>();
-            RequireForUpdate<MainMenuState>();
-            RequireForUpdate<LoadingState>();
+            _filterBuilder = World.Filter.With<StateMachine>().With<MainMenuState>().With<LoadingState>();
         }
 
-        protected override void OnStartRunning()
+        public override void OnUpdate(float deltaTime)
         {
-            base.OnStartRunning();
-            var entity = SystemAPI.GetSingletonEntity<StateMachine>();
-            EntityManager.SetComponentData(entity, new LoadingState
+            foreach (var entity in _filterBuilder.Build())
             {
-                Progress = 0,
-                LoadingTime = 0,
-                SceneIsLoaded = true
-            });
-        }
-
-        protected override void OnUpdate()
-        {
-            foreach (var (loadingStateProcess, entity) in SystemAPI.Query<LoadingState>()
-                         .WithAll<MainMenuState>().WithEntityAccess())
-            {
-                var data = loadingStateProcess;
-                var progress = math.clamp(data.LoadingTime / _loadingDuration, 0, 1);
-                data.Progress = progress;
-
-                if (data.LoadingTime < _loadingDuration)
+                ref var loadingState = ref entity.GetComponent<LoadingState>();
+                var progress = math.clamp(loadingState.LoadingTime / _loadingDuration, 0, 1);
+                loadingState.Progress = progress;
+                
+                if (!loadingState.SceneIsLoaded)
                 {
-                    data.LoadingTime += SystemAPI.Time.DeltaTime;
-                    EntityManager.SetComponentData(entity, data);
+                    var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+                    loadingSceneLoadingOperation.completed += _ => { };
+                    loadingState.SceneIsLoaded = true;
+                }
+
+                if (loadingState.LoadingTime < _loadingDuration)
+                {
+                    loadingState.LoadingTime += deltaTime;
                 }
                 else
                 {
-                    var operation = SceneManager.LoadSceneAsync(1);
+                    var operation = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
                     operation.completed += _ =>
                     {
-                        EntityManager.RemoveComponent<LoadingState>(entity);
-                        EntityManager.SetComponentData(entity, new MainMenuState
-                        {
-                            SceneIsLoaded = true
-                        });
                     };
+                    entity.RemoveComponent<LoadingState>();
+                    
+                    if (SceneManager.GetSceneByBuildIndex(1).isLoaded)
+                    {
+                        var loadingSceneUnloadingOperation = SceneManager.UnloadSceneAsync(1);
+                        loadingSceneUnloadingOperation.completed += _ => { };
+                    }
+
+                    ref var mainMenuState = ref entity.GetComponent<MainMenuState>();
+                    mainMenuState.SceneIsLoaded = true;
                 }
             }
         }

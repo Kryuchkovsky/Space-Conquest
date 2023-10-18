@@ -1,12 +1,5 @@
-﻿using Unity.Entities;
+﻿using Scellecs.Morpeh;
 
 namespace _GameLogic.Common
 {
-    public struct ClickEvent : IComponentData
-    {
-    }
-
-    public struct Performing : IComponentData, IEnableableComponent
-    {
-    }
 }

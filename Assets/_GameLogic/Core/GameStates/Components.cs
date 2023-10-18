@@ -1,25 +1,44 @@
-using Unity.Entities;
+using Scellecs.Morpeh;
+using Unity.IL2CPP.CompilerServices;
 
 namespace _GameLogic.Core.GameStates
 {
-    public struct StateMachine : IComponentData
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [System.Serializable]
+    public struct StateMachine : IComponent
     {
     }
     
-    public struct LoadingState : IComponentData
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [System.Serializable]
+    public struct LoadingState : IComponent
     {
         public float Progress;
         public float LoadingTime;
         public bool SceneIsLoaded;
     }
 
-    public struct MainMenuState : IComponentData
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [System.Serializable]
+    public struct MainMenuState : IComponent
     {
         public bool SceneIsLoaded;
     }
 
-    public struct GameState : IComponentData
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [System.Serializable]
+    public struct PlayState : IComponent
     {
+        public bool GalaxyGenerationRequestIsCreated;
+        public bool GalaxyIsCreated;
         public bool SceneIsLoaded;
     }
 }

@@ -1,9 +1,5 @@
-﻿using UnityEngine;
+﻿using Scellecs.Morpeh;
 
 namespace _GameLogic.Core.GameStates
 {
-    public class Events : MonoBehaviour
-    {
-        
-    }
 }

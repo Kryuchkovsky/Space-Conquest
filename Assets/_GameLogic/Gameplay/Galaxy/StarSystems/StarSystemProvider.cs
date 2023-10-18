@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems
 {
-    public class StarSystemAuthoring : MonoProvider<StarSystem>, IPointerClickHandler
+    public class StarSystemProvider : MonoProvider<StarSystem>, IPointerClickHandler
     {
         public event Action OnStarSystemClicked;
 
@@ -25,7 +25,8 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
 
         private void AddClickEvent()
         {
-            Entity.AddComponent<ClickEvent>();
+            var starSystemClickEvent = World.Default.GetEvent<StarSystemClickEvent>();
+            starSystemClickEvent.NextFrame(new StarSystemClickEvent());
         }
 
         public void OnPointerClick(PointerEventData eventData)

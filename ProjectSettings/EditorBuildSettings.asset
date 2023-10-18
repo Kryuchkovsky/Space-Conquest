@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_GameDesign/Scenes/[0]LoadingScene.unity
+    path: Assets/_GameDesign/Scenes/[0]LogicScene.unity
+    guid: ba6894c2cd32c7544b7569825e7ecbde
+  - enabled: 1
+    path: Assets/_GameDesign/Scenes/[1]LoadingScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/_GameDesign/Scenes/[1]MainMenuScene.unity
+    path: Assets/_GameDesign/Scenes/[2]MainMenuScene.unity
     guid: 557766299d9ad5149bc7d766be757bdc
   - enabled: 1
-    path: Assets/_GameDesign/Scenes/[2]GalaxyScene.unity
+    path: Assets/_GameDesign/Scenes/[3]GalaxyMapScene.unity
     guid: 348f7349cba17774faa5d102313b41bb
   - enabled: 1
-    path: Assets/_GameDesign/Scenes/[3]StarSystemScene.unity
+    path: Assets/_GameDesign/Scenes/[4]StarSystemScene.unity
     guid: d8615503cf6e72d4a96d246579723b2b
   m_configObjects: {}
