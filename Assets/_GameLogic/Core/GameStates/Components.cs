@@ -39,6 +39,7 @@ namespace _GameLogic.Core.GameStates
     {
         public bool GalaxyGenerationRequestIsCreated;
         public bool GalaxyIsCreated;
-        public bool SceneIsLoaded;
+        public bool GalaxySceneIsLoaded;
+        public bool StarSystemSceneIsLoaded;
     }
 }

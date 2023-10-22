@@ -28,7 +28,7 @@ namespace _GameLogic.Core.GameStates.Systems
             {
                 ref var gameState = ref entity.GetComponent<PlayState>();
                 
-                if (gameState.SceneIsLoaded && !gameState.GalaxyGenerationRequestIsCreated && !gameState.GalaxyIsCreated)
+                if (gameState.GalaxySceneIsLoaded && !gameState.GalaxyGenerationRequestIsCreated && !gameState.GalaxyIsCreated)
                 {
                     var galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
                     galaxyGenerationRequest.Publish(new GalaxyGenerationRequest

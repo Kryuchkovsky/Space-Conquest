@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7345236424790516861}
   - component: {fileID: 5456947485985348998}
   - component: {fileID: 1532537775577014757}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StarModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4506203427925122786}
   - component: {fileID: 3582306870003698480}
   - component: {fileID: 2742564435357137052}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StarSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4279482299291585123}
   - component: {fileID: 5143599216294659707}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hexagon Flat-Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}

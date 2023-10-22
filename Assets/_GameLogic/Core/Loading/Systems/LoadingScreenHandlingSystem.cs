@@ -27,9 +27,9 @@ namespace _GameLogic.Core.Loading.Systems
             {
                 ref var state = ref entity.GetComponent<LoadingState>();
 
-                if (state.SceneIsLoaded)
+                foreach (var loadingSceneUIEntity in _loadingScreenUIFilterBuilder.Build())
                 {
-                    var loadingSceneUI = _loadingScreenUIFilterBuilder.Build().First().GetComponent<LoadingSceneUI>().Value;
+                    var loadingSceneUI = loadingSceneUIEntity.GetComponent<LoadingSceneUI>().Value;
                     loadingSceneUI.BarFillingImage.fillAmount = state.Progress;
                     loadingSceneUI.LoadingProgressText.SetText("{0:0}", state.Progress * 100);
                 }

@@ -46,7 +46,7 @@ namespace _GameLogic.Core.GameStates.Systems
                             var galaxyMapScene = SceneManager.GetSceneByBuildIndex(3);
                             SceneManager.SetActiveScene(galaxyMapScene);
                         };
-                        playState.SceneIsLoaded = true;
+                        playState.GalaxySceneIsLoaded = true;
                     }
                     
                     entity.SetComponent(playState);

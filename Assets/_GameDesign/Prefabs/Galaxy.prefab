@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8809102077905245946}
   - component: {fileID: 2295753496468297442}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Galaxy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
