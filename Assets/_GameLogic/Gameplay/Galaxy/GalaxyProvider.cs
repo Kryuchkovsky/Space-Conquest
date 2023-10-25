@@ -2,8 +2,7 @@
 
 namespace _GameLogic.Gameplay.Galaxy
 {
-    public class GalaxyView : MonoProvider<IsGalaxy>
+    public class GalaxyProvider : MonoProvider<Galaxy>
     {
-
     }
 }

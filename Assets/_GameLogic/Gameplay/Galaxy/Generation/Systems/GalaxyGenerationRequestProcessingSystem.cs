@@ -35,7 +35,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
 
                 foreach (var point in points)
                 {
-                    var position = new Vector3(point.X, 0, point.Y);
+                    var position = point;
                     var starSystem = Instantiate(catalog.StarSystemPrefab, position, quaternion.identity, galaxy.transform);
                 }
             }

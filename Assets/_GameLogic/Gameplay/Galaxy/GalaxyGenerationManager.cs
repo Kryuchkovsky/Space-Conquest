@@ -1,17 +1,17 @@
-﻿using System.Drawing;
+﻿using _GameLogic.GalaxyGenerator;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _GameLogic.GalaxyGenerator
+namespace _GameLogic.Gameplay.Galaxy
 {
     public class GalaxyGenerationManager
     {
         private const int FluctuationRate = 10;
         private const float DistanceBetweenSystems = 0.1f;
 
-        private PointF[] _points;
+        private Vector3[] _points;
 
-        public PointF[] GetPoints() => _points;
+        public Vector3[] GetPoints() => _points;
 
         public GalaxyConfiguration Configuration { get; set; }
 
@@ -25,9 +25,9 @@ namespace _GameLogic.GalaxyGenerator
             }
         }
 
-        public PointF[] GenerateSimpleGalaxy()
+        public Vector3[] GenerateSimpleGalaxy()
         {
-            var points = new PointF[Configuration.NumberOfStars];
+            var points = new Vector3[Configuration.NumberOfStars];
             var t = -Mathf.Rad2Deg;
             var row = 1;
 
@@ -43,7 +43,7 @@ namespace _GameLogic.GalaxyGenerator
                 var distance = distanceFromCenter * fluctuationOfDistanceFromCenter;
                 var xPos = Mathf.Cos(fluctuatedT) * distance * Configuration.Scale;
                 var yPos = Mathf.Sin(fluctuatedT) * distance * Configuration.Scale;;
-                points[i] = new PointF(xPos, yPos);
+                points[i] = new Vector3(xPos, 0, yPos);
 
                 if (t >= Mathf.Rad2Deg)
                 {
