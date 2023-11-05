@@ -1,7 +1,7 @@
 ﻿using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 
-namespace _GameLogic.GalaxyGenerator
+namespace _GameLogic.Gameplay.Galaxy
 {
 	public class StellarDirectory
 	{

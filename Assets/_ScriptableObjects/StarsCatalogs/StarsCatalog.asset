@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e063f094d55c4bfa94cfc2a045da3b4e, type: 3}
+  m_Name: StarsCatalog
+  m_EditorClassIdentifier: 
+  _starsData:
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 1279026108785093692, guid: 41135847c7b417c468840072b36a94f0,
+      type: 3}
+    <StarType>k__BackingField: 8
+    <SpreadingRate>k__BackingField: 0.76
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 2392167216364180561, guid: fcc4fd2d8f40c1b41b7a25960bea890b,
+      type: 3}
+    <StarType>k__BackingField: 7
+    <SpreadingRate>k__BackingField: 0.12
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 1510836732324554561, guid: 709f7607bd4ef044a9e46c7827ce19e8,
+      type: 3}
+    <StarType>k__BackingField: 6
+    <SpreadingRate>k__BackingField: 0.076
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 7397238635951195937, guid: e115e7e100fb63a419995b935c88a3b6,
+      type: 3}
+    <StarType>k__BackingField: 5
+    <SpreadingRate>k__BackingField: 0.03
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 7436097548164733412, guid: bafb0706334394d4e9e5da5965cf0731,
+      type: 3}
+    <StarType>k__BackingField: 4
+    <SpreadingRate>k__BackingField: 0.0061
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 2365311161016585221, guid: 34461bcd7b24bb24cb201b14577985a1,
+      type: 3}
+    <StarType>k__BackingField: 3
+    <SpreadingRate>k__BackingField: 0.0012
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 1676290586367843667, guid: 152f6909d8423734fa7342d5f3754f77,
+      type: 3}
+    <StarType>k__BackingField: 2
+    <SpreadingRate>k__BackingField: 0.0000003
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 7852711105560715771, guid: 687fdb25f16e8084cb4645b9d35656e9,
+      type: 3}
+    <StarType>k__BackingField: 9
+    <SpreadingRate>k__BackingField: 0.0022332
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 1945771749133331723, guid: 4d585ab0b2364b843951ccf8725f315c,
+      type: 3}
+    <StarType>k__BackingField: 10
+    <SpreadingRate>k__BackingField: 0.0022332
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 7529736950745678300, guid: b7eee3de025fb734c8c9ad02061c4cfd,
+      type: 3}
+    <StarType>k__BackingField: 1
+    <SpreadingRate>k__BackingField: 0.0022332
+  - <ResourceModifier>k__BackingField: 0
+    <IsHabitable>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 1865937481064212336, guid: e078bcfe7dc372b4e9c35c6f4d8036ea,
+      type: 3}
+    <StarType>k__BackingField: 0
+    <SpreadingRate>k__BackingField: 0.0022332

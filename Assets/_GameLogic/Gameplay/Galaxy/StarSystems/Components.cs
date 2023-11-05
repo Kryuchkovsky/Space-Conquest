@@ -9,10 +9,13 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
     [System.Serializable]
     public struct StarSystem : IComponent
     {
+        public StarSystemProvider Provider;
+        public Entity[] StarEntities;
+        public Entity[] PlanetEntities;
     }
 
     public struct StarSystemClickEvent : IEventData
     {
-        public EntityId EntityId;
+        public Entity Entity;
     }
 }

@@ -24,7 +24,10 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
         private void AddClickEvent()
         {
             var starSystemClickEvent = World.Default.GetEvent<StarSystemClickEvent>();
-            starSystemClickEvent.NextFrame(new StarSystemClickEvent());
+            starSystemClickEvent.NextFrame(new StarSystemClickEvent
+            {
+                Entity = Entity
+            });
         }
 
         public void OnPointerDown(PointerEventData eventData)

@@ -1,15 +1,9 @@
 ﻿namespace _GameLogic.Gameplay.Galaxy.StarSystems.Stars
 {
-    public enum Classifications
+    public enum StarType
     {
-        MainSequenceStar,
         NeutronStar,
-        BlackHole
-    }
-    
-    public enum SpectralType
-    {
-        undefined,
+        BlackHole,
         O,
         B,
         A,
@@ -19,11 +13,5 @@
         M,
         L,
         T
-    }
-
-    public enum QuantityType
-    {
-        Binary,
-        Double
     }
 }

@@ -4,5 +4,6 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Planets
 {
     public struct Planet : IComponent
     {
+        public PlanetProvider Provider;
     }
 }

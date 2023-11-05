@@ -12,3 +12,192 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a5c036d83e4ce397520b41e603d0d8, type: 3}
   m_Name: PlanetCatalog
   m_EditorClassIdentifier: 
+  _planetsData:
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 6a363156803812f48824d2c4b1192ef6, type: 2}
+    - {fileID: 2100000, guid: c326e54a0c15f294590981ef71008394, type: 2}
+    - {fileID: 2100000, guid: 5f3696695340f5148b0d7de87c14ff0b, type: 2}
+    - {fileID: 2100000, guid: 93e298da8434ab94e925b7094a614189, type: 2}
+    - {fileID: 2100000, guid: fed86c2ad7b201f449b982cbbe2af958, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 0
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 872855cd0d30c134d9eebf0b5302c643, type: 2}
+    - {fileID: 2100000, guid: ee0c59dcfa9e93448959edee2b42e780, type: 2}
+    - {fileID: 2100000, guid: 96e298f00f3bedd4ea867b0800a6b20d, type: 2}
+    - {fileID: 2100000, guid: 405dcc437f7424549804d5358bbba3c0, type: 2}
+    - {fileID: 2100000, guid: f9e10178fbce90943b94c5b8d9151b23, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 1
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: cc04401b5a53af54882a9e7bc04a7a8a, type: 2}
+    - {fileID: 2100000, guid: 3995f280ae4d44f4b895bd89ed05e872, type: 2}
+    - {fileID: 2100000, guid: 1b90db7ff355e5a4fbdb6af335bf59ac, type: 2}
+    - {fileID: 2100000, guid: 005906c0c82128a4482c3d22fdd66bb9, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 2
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 21fc8e567f26ede49a04360a1dd10bf2, type: 2}
+    - {fileID: 2100000, guid: 564d0746cf3fd684fa14dd1cd724510b, type: 2}
+    - {fileID: 2100000, guid: fde5c7c3b51709042b5503efca97c05d, type: 2}
+    - {fileID: 2100000, guid: ecf5b1cba2054684f8207e89960c2b69, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 3
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 9632e510d3fdbcb44842a0627ed124da, type: 2}
+    - {fileID: 2100000, guid: 95fc58274502a964c8db55e02d0e7c99, type: 2}
+    - {fileID: 2100000, guid: 51f5a0f60473d6b49b7a3e3acb47d0a9, type: 2}
+    - {fileID: 2100000, guid: 8b39721d0ad75bf4b8634b3a58b856ae, type: 2}
+    - {fileID: 2100000, guid: 30bf05bfdafe6bb40b421744ba88526f, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 4
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: be925f3ee1914884f9b104772eb6e23c, type: 2}
+    - {fileID: 2100000, guid: ba3ca29d0fd4efb41a2a4755b86dfdbe, type: 2}
+    - {fileID: 2100000, guid: b75bdf48842d9ea41b9bc85919c9fa2f, type: 2}
+    - {fileID: 2100000, guid: aac9a3d71004b974b86abdde996147ca, type: 2}
+    - {fileID: 2100000, guid: d35955be28e433e4d8ab2b17ba7f21d1, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 5
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 6de5793f54680964fbf5b90ac8662928, type: 2}
+    - {fileID: 2100000, guid: 41bf408c523185f4b8e229818a351599, type: 2}
+    - {fileID: 2100000, guid: f41b7c74a872be54a863c855251bb3f0, type: 2}
+    - {fileID: 2100000, guid: 2965ebade24787e4a9905bb80070f0fd, type: 2}
+    - {fileID: 2100000, guid: 166b856e6834e0247af5481e74dc364e, type: 2}
+    - {fileID: 2100000, guid: b96b65bddaa89a344bf9da6e8566eaec, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 6
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 95280e8f77b5e914fbe56532fa6354a2, type: 2}
+    - {fileID: 2100000, guid: 3a29315d32575e64091fbd5d07889586, type: 2}
+    - {fileID: 2100000, guid: fc98a06b8b5b0144588308c6ca497623, type: 2}
+    - {fileID: 2100000, guid: ccf41180ac7164746952fcd1f0eaf5c9, type: 2}
+    - {fileID: 2100000, guid: 6ecf346fb98d590419aa831b6b2d8fa0, type: 2}
+    - {fileID: 2100000, guid: 8fd0bef19d96acb46be2ce08c795a368, type: 2}
+    - {fileID: 2100000, guid: fe378cac91c856946b23310d21c2b95a, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 0}
+    <Type>k__BackingField: 7
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 2beb571b7e35e9d45b90bbf8798741d5, type: 2}
+    - {fileID: 2100000, guid: e503508cf423367418e9730f14d5ed13, type: 2}
+    - {fileID: 2100000, guid: 121991660fdebe34b89e52870c186717, type: 2}
+    - {fileID: 2100000, guid: f780ff588f70ae64e831e89b3f66044f, type: 2}
+    - {fileID: 2100000, guid: 09e159321a223ba4e9a484deec46f77b, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 8
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 33489d1e93d0ff545835b267fa6cec5c, type: 2}
+    - {fileID: 2100000, guid: 779f982800da7244d936a48fed143ab5, type: 2}
+    - {fileID: 2100000, guid: f90a39e8d342b494fabfc861fff4cbef, type: 2}
+    - {fileID: 2100000, guid: d6e0ffe586c50cf4c88340c049572128, type: 2}
+    - {fileID: 2100000, guid: f4fda56fd67f0fa47b646258a517af53, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 0}
+    <Type>k__BackingField: 9
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 33489d1e93d0ff545835b267fa6cec5c, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 10
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 779f982800da7244d936a48fed143ab5, type: 2}
+    - {fileID: 2100000, guid: f90a39e8d342b494fabfc861fff4cbef, type: 2}
+    - {fileID: 2100000, guid: d6e0ffe586c50cf4c88340c049572128, type: 2}
+    - {fileID: 2100000, guid: f4fda56fd67f0fa47b646258a517af53, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 11
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 0
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 779f982800da7244d936a48fed143ab5, type: 2}
+    - {fileID: 2100000, guid: f90a39e8d342b494fabfc861fff4cbef, type: 2}
+    - {fileID: 2100000, guid: d6e0ffe586c50cf4c88340c049572128, type: 2}
+    - {fileID: 2100000, guid: f4fda56fd67f0fa47b646258a517af53, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 12
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: c5918b2a6287c454f81dce37d9361885, type: 2}
+    - {fileID: 2100000, guid: a28bc1db200124f47a8ebbd2af4e1fab, type: 2}
+    - {fileID: 2100000, guid: 32939f307c039bd4883b77c5072ae1d2, type: 2}
+    - {fileID: 2100000, guid: 1cd33c5320687784da56369c91259412, type: 2}
+    - {fileID: 2100000, guid: d1c99a8a1570347488cb40c9bbe7b5bf, type: 2}
+    - {fileID: 2100000, guid: 8f72c1fd36a827f429271c5d84f994a7, type: 2}
+    - {fileID: 2100000, guid: c6909258f88d4f44398a48a12f0edb43, type: 2}
+    - {fileID: 2100000, guid: 8998e0050180ee748861be2d648a7e2b, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 13
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 7520bf7d5294e1b4e88b4f378ab8f70e, type: 2}
+    - {fileID: 2100000, guid: 189ad5a258fea1146b15d0b709dae9fd, type: 2}
+    - {fileID: 2100000, guid: 4b2a608045c66244ba6327a46e12cf3b, type: 2}
+    - {fileID: 2100000, guid: 84a523acfb80cc549b2e4609a2f5717f, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 14
+  - <ResourceModifier>k__BackingField: 80
+    <IsHabitable>k__BackingField: 1
+    <PlanetMaterials>k__BackingField:
+    - {fileID: 2100000, guid: 7429a98da0c28454d88d3734c79d08d9, type: 2}
+    - {fileID: 2100000, guid: 833290dbf22a37c41ac3f95fdc19be87, type: 2}
+    - {fileID: 2100000, guid: 7950083cba4bc3941b36380f757f815d, type: 2}
+    - {fileID: 2100000, guid: 96ed54a320a618a478a16c6a7a3f2c1b, type: 2}
+    - {fileID: 2100000, guid: a247de26278f7ff48aa92ad62b4487db, type: 2}
+    - {fileID: 2100000, guid: 9192589a27edb98469aa56d61a3d2a13, type: 2}
+    <CloudsMaterials>k__BackingField: []
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
+    <Type>k__BackingField: 15

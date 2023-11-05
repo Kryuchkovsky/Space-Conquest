@@ -1,10 +1,10 @@
 ﻿namespace _GameLogic.Gameplay.Galaxy.StarSystems.Planets
 {
-    public enum Classifications
+    public enum PlanetType
     {
         Arid,
         Desert,
-        Savanna,
+        Savannah,
         Alpine,
         Arctic,
         Tundra,

@@ -1,4 +1,6 @@
 ﻿using _GameLogic.Core.GameStates;
+using _GameLogic.Extensions;
+using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Systems;
 using Unity.IL2CPP.CompilerServices;
@@ -32,9 +34,29 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                     
                     if (!SceneManager.GetSceneByBuildIndex(4).isLoaded)
                     {
-                        var operation = SceneManager.LoadSceneAsync(4);
+                        var starSystemEntity = evt.Entity;
+                        var operation = SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
                         operation.completed += _ =>
                         {
+                            var starSystemScene = SceneManager.GetSceneByBuildIndex(4);
+                            SceneManager.SetActiveScene(starSystemScene);
+                            var starSystemComponent = starSystemEntity.GetComponent<StarSystem>();
+                            var layer = LayerMask.NameToLayer("StarSystem");
+                            var starSystemObject = new GameObject($"[star_system_{starSystemEntity.ID}]");
+                            
+                            for (int i = 0; i < starSystemComponent.StarEntities.Length; i++)
+                            {
+                                var starComponent = starSystemComponent.StarEntities[i].GetComponent<Star>();
+
+                                var star = Instantiate(starComponent.Provider, starSystemObject.transform);
+                            }
+
+                            for (int i = 0; i < starSystemComponent.PlanetEntities.Length; i++)
+                            {
+                                    
+                            }
+
+                            starSystemObject.transform.SetLayerRecursively(layer);
                         };
                     }
                 }
