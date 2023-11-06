@@ -21,7 +21,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation
 			float maxArmOffset = 0.9f, 
 			float rotationFactor = 5f, 
 			float randomOffsetOnAxis = 0.04f,
-			float scale = 100)
+			float scale = 1)
 		{
 			Name = name;
 			NumberOfStars = numberOfStarsStars;

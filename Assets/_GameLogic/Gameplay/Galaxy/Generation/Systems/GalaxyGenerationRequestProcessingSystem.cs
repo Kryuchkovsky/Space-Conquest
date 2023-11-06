@@ -1,11 +1,11 @@
-﻿using _GameLogic.Extensions.Configs;
+﻿using _GameLogic.Core;
+using _GameLogic.Extensions.Configs;
 using _GameLogic.Gameplay.Galaxy.StarSystems;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Systems;
 using Unity.IL2CPP.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,8 +17,9 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
     [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/Generation/" + nameof(GalaxyGenerationRequestProcessingSystem))]
     public class GalaxyGenerationRequestProcessingSystem : UpdateSystem
     {
-        private const int FluctuationRate = 10;
-        private const float DistanceBetweenSystems = 0.1f;
+        private const float FluctuationRate = 0.25f;
+        private const float DistanceBetweenSystems = 30f;
+        private const float DistanceBetweenPlanets = 20f;
         
         private Request<GalaxyGenerationRequest> _galaxyGenerationRequest;
         private GalaxyConfiguration _configuration;
@@ -48,30 +49,26 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         private void GenerateGalaxy()
         {
             var galaxy = Instantiate(_gameResourcesCatalog.GalaxyPrefab);
-            var t = -Mathf.Rad2Deg;
-            var row = 1;
+            var distanceFromCenter = DistanceBetweenSystems * 3;
+            var t = 0f;
 
             for (int i = 0; i < _configuration.NumberOfStars; i++)
             {
-                var distanceFromCenter = DistanceBetweenSystems * row;
-                var circleLenght = distanceFromCenter * 2 * Mathf.PI;
-                var delta = Mathf.Rad2Deg * (DistanceBetweenSystems / circleLenght);
-                
+                var circleLenght = distanceFromCenter * 2f * Mathf.PI;
+                var delta = DistanceBetweenSystems * (1 + Random.Range(-FluctuationRate, FluctuationRate)) / circleLenght;
                 t += delta;
-                
-                if (t >= Mathf.Rad2Deg)
+
+                if (t >= 1)
                 {
-                    t -= 2 * Mathf.Rad2Deg;
-                    row++;
+                    t -= 1;
+                    distanceFromCenter += DistanceBetweenSystems;
                 }
-                
-                var fluctuationOfCirclePosition = Random.Range(1 - FluctuationRate, 1 + FluctuationRate);
-                var fluctuationOfDistanceFromCenter = Random.Range(1 - FluctuationRate, 1 + FluctuationRate);
-                var fluctuatedT = t * fluctuationOfCirclePosition;
-                var distance = distanceFromCenter * fluctuationOfDistanceFromCenter;
-                var xPos = Mathf.Cos(fluctuatedT) * distance * _configuration.Scale;
-                var yPos = Mathf.Sin(fluctuatedT) * distance * _configuration.Scale;;
-                var pos = new Vector3(xPos, 0, yPos);
+
+                var fluctuatedDistance = distanceFromCenter + DistanceBetweenSystems * Random.Range(-FluctuationRate, FluctuationRate);
+                var rad = Mathf.Lerp(0, 360, t) / Mathf.Rad2Deg;
+                var xPos = Mathf.Cos(rad);
+                var yPos = Mathf.Sin(rad);
+                var pos = new Vector3(xPos, 0, yPos) * fluctuatedDistance * _configuration.Scale;
 
                 var starSystemProvider = Instantiate(
                     _gameResourcesCatalog.StarSystemPrefab, pos, Quaternion.identity, galaxy.transform);
@@ -82,14 +79,16 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                 
                 for (int starIndex = 0; starIndex < starEntities.Length; starIndex++)
                 {
+                    var starEntity = World.CreateEntity();
+                    starEntities[starIndex] = starEntity;
                     var starData = _starsCatalog.GetRandomStarData();
                     var starProvider = Instantiate(starData.Prefab, starSystemProvider.transform);
+                    World.Default.RemoveEntity(starProvider.Entity);
                     var starComponent = new Star
                     {
-                        Provider = starProvider
+                        Provider = starData.Prefab
                     };
-                    starProvider.Entity.SetComponent(starComponent);
-                    starEntities[starIndex] = starProvider.Entity;
+                    starEntity.SetComponent(starComponent);
                 }
                 
                 starSystemComponent.StarEntities = starEntities; 
@@ -112,6 +111,14 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     {
                         planetEntity.AddComponent<IsHabitable>();
                     }
+                    
+                    var pRad = Random.Range(0f, 360f) / Mathf.Rad2Deg;
+                    var planetPosition = new Position
+                    {
+                        Value = new Vector3(Mathf.Cos(pRad), 0, Mathf.Sin(pRad)) * (planetIndex + 1) *
+                                DistanceBetweenPlanets * (1 + Random.Range(-FluctuationRate, FluctuationRate))
+                    };
+                    planetEntity.SetComponent(planetPosition);
                 }
 
                 starSystemComponent.PlanetEntities = planetEntities;

@@ -28,16 +28,15 @@ namespace _GameLogic.Core.GameStates.Systems
             {
                 foreach (var entity in  _stateMachineFilterBuilder.Build())
                 {
-                    entity.RemoveComponent<MainMenuState>();
-                    
                     if (SceneManager.GetSceneByBuildIndex(2).isLoaded)
                     {
                         var mainMenuSceneUnloadingOperation = SceneManager.UnloadSceneAsync(2);
-                        mainMenuSceneUnloadingOperation.completed += _ => { };
+                        mainMenuSceneUnloadingOperation.completed += _ =>
+                        {
+                            entity.RemoveComponent<MainMenuState>();
+                        };
                     }
                     
-                    var playState = new PlayState();
-
                     if (!SceneManager.GetSceneByBuildIndex(3).isLoaded)
                     {
                         var galaxyMapSceneLoadingOperation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
@@ -45,22 +44,20 @@ namespace _GameLogic.Core.GameStates.Systems
                         {
                             var galaxyMapScene = SceneManager.GetSceneByBuildIndex(3);
                             SceneManager.SetActiveScene(galaxyMapScene);
+                            var playState = new PlayState();
+                            playState.GalaxySceneIsLoaded = true;
+                            entity.SetComponent(playState);
                         };
-                        playState.GalaxySceneIsLoaded = true;
                     }
-                    
-                    entity.SetComponent(playState);
-                    
-                    var loadingState = new LoadingState();
                     
                     if (!SceneManager.GetSceneByBuildIndex(1).isLoaded)
                     {
                         var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
                         loadingSceneLoadingOperation.completed += _ => { };
+                        var loadingState = new LoadingState();
                         loadingState.SceneIsLoaded = true;
+                        entity.SetComponent(loadingState);
                     }
-                    
-                    entity.SetComponent(loadingState);
                 }
             }
         }

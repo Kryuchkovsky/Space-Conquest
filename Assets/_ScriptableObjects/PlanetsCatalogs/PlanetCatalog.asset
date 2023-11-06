@@ -107,7 +107,8 @@ MonoBehaviour:
     - {fileID: 2100000, guid: 8fd0bef19d96acb46be2ce08c795a368, type: 2}
     - {fileID: 2100000, guid: fe378cac91c856946b23310d21c2b95a, type: 2}
     <CloudsMaterials>k__BackingField: []
-    <Prefab>k__BackingField: {fileID: 0}
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
     <Type>k__BackingField: 7
   - <ResourceModifier>k__BackingField: 80
     <IsHabitable>k__BackingField: 1
@@ -130,7 +131,8 @@ MonoBehaviour:
     - {fileID: 2100000, guid: d6e0ffe586c50cf4c88340c049572128, type: 2}
     - {fileID: 2100000, guid: f4fda56fd67f0fa47b646258a517af53, type: 2}
     <CloudsMaterials>k__BackingField: []
-    <Prefab>k__BackingField: {fileID: 0}
+    <Prefab>k__BackingField: {fileID: 8012299799062458157, guid: 2c863376ab6b8af4d8fd25e03b05076f,
+      type: 3}
     <Type>k__BackingField: 9
   - <ResourceModifier>k__BackingField: 80
     <IsHabitable>k__BackingField: 1

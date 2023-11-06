@@ -1,5 +1,7 @@
-﻿using _GameLogic.Core.GameStates;
+﻿using _GameLogic.Core;
+using _GameLogic.Core.GameStates;
 using _GameLogic.Extensions;
+using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Systems;
@@ -28,9 +30,9 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
         {
             foreach (var evt in _clickEvent.publishedChanges)           
             {
-                foreach (var entity in _stateMachineFilterBuilder.Build())
+                foreach (var stateMachineEntity in _stateMachineFilterBuilder.Build())
                 {
-                    ref var playState = ref entity.GetComponent<PlayState>();
+                    ref var playState = ref stateMachineEntity.GetComponent<PlayState>();
                     
                     if (!SceneManager.GetSceneByBuildIndex(4).isLoaded)
                     {
@@ -53,7 +55,10 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
 
                             for (int i = 0; i < starSystemComponent.PlanetEntities.Length; i++)
                             {
-                                    
+                                var entity = starSystemComponent.PlanetEntities[i];
+                                var planetComponent = entity.GetComponent<Planet>();
+                                var position = entity.GetComponent<Position>().Value;
+                                var planet = Instantiate(planetComponent.Provider, position, Quaternion.identity, starSystemObject.transform);
                             }
 
                             starSystemObject.transform.SetLayerRecursively(layer);

@@ -18,6 +18,5 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Stars
     [System.Serializable]
     public struct StarData : IComponent
     {
-
     }
 }
