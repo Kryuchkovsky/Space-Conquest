@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d29d433fbf4544ae147e17cf249c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PlanetMeshRenderer>k__BackingField: {fileID: 0}
-  <CloudsMeshRenderer>k__BackingField: {fileID: 0}
+  <PlanetMeshRenderer>k__BackingField: {fileID: 8495780884602791479}
+  <CloudsMeshRenderer>k__BackingField: {fileID: 7217880519102910946}
 --- !u!1 &2525041729790454582
 GameObject:
   m_ObjectHideFlags: 0

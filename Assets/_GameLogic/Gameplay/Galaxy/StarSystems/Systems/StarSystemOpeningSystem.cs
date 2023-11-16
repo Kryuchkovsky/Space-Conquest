@@ -14,12 +14,12 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/StarSystems/" + nameof(StarSystemMapOpeningSystem))]
-    public class StarSystemMapOpeningSystem : UpdateSystem
+    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/StarSystems/" + nameof(StarSystemOpeningSystem))]
+    public class StarSystemOpeningSystem : UpdateSystem
     {
         private FilterBuilder _stateMachineFilterBuilder;
         private Event<StarSystemClickEvent> _clickEvent;
-        
+
         public override void OnAwake()
         {
             _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<PlayState>().Without<LoadingState>();
@@ -28,12 +28,12 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
 
         public override void OnUpdate(float deltaTime)
         {
-            foreach (var evt in _clickEvent.publishedChanges)           
+            foreach (var evt in _clickEvent.publishedChanges)
             {
                 foreach (var stateMachineEntity in _stateMachineFilterBuilder.Build())
                 {
                     ref var playState = ref stateMachineEntity.GetComponent<PlayState>();
-                    
+
                     if (!SceneManager.GetSceneByBuildIndex(4).isLoaded)
                     {
                         var starSystemEntity = evt.Entity;
@@ -45,7 +45,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             var starSystemComponent = starSystemEntity.GetComponent<StarSystem>();
                             var layer = LayerMask.NameToLayer("StarSystem");
                             var starSystemObject = new GameObject($"[star_system_{starSystemEntity.ID}]");
-                            
+
                             for (int i = 0; i < starSystemComponent.StarEntities.Length; i++)
                             {
                                 var starComponent = starSystemComponent.StarEntities[i].GetComponent<Star>();
@@ -58,7 +58,8 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                                 var entity = starSystemComponent.PlanetEntities[i];
                                 var planetComponent = entity.GetComponent<Planet>();
                                 var position = entity.GetComponent<Position>().Value;
-                                var planet = Instantiate(planetComponent.Provider, position, Quaternion.identity, starSystemObject.transform);
+                                var planet = Instantiate(planetComponent.Provider, position, Quaternion.identity,
+                                    starSystemObject.transform);
                             }
 
                             starSystemObject.transform.SetLayerRecursively(layer);

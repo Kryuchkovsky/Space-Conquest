@@ -23,7 +23,8 @@ namespace _GameLogic.Core
 
             AddSystem<PlayStateSwitchingOnRequestProcessingSystem>();
             AddSystem<GalaxyGenerationRequestProcessingSystem>();
-            AddSystem<StarSystemMapOpeningSystem>();
+            AddSystem<StarSystemOpeningSystem>();
+            AddSystem<StarSystemClosingSystem>();
         }
     }
 }
