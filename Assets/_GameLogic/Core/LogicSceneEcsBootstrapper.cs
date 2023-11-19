@@ -1,8 +1,6 @@
 ﻿using _GameLogic.Core.GameStates.Systems;
 using _GameLogic.Core.Loading.Systems;
 using _GameLogic.Core.MainMenu.Systems;
-using _GameLogic.Gameplay.Galaxy.Generation.Systems;
-using _GameLogic.Gameplay.Galaxy.StarSystems.Systems;
 using Scellecs.Morpeh;
 
 namespace _GameLogic.Core
@@ -20,11 +18,8 @@ namespace _GameLogic.Core
             
             AddSystem<MainMenuLoadingSystem>();
             AddSystem<NewGameButtonClickEventReactingSystem>();
-
+            
             AddSystem<PlayStateSwitchingOnRequestProcessingSystem>();
-            AddSystem<GalaxyGenerationRequestProcessingSystem>();
-            AddSystem<StarSystemOpeningSystem>();
-            AddSystem<StarSystemClosingSystem>();
         }
     }
 }

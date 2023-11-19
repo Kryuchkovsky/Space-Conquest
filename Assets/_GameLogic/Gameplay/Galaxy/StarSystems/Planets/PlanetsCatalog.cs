@@ -2,7 +2,7 @@
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems.Planets
 {
-    [CreateAssetMenu(menuName = "Create PlanetCatalog", fileName = "PlanetCatalog", order = 0)]
+    [CreateAssetMenu(menuName = "Create PlanetCatalog", fileName = "PlanetCatalog", order = 1)]
     public class PlanetsCatalog : ScriptableObject
     {
         [SerializeField] private PlanetCatalogData[] _planetsData =

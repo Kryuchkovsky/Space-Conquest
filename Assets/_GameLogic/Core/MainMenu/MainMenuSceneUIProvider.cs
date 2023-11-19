@@ -1,11 +1,10 @@
-﻿using _GameLogic.Core.MainMenu;
-using Scellecs.Morpeh;
+﻿using Scellecs.Morpeh;
 using Scellecs.Morpeh.Providers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _GameLogic.Core.GameStates
+namespace _GameLogic.Core.MainMenu
 {
     [Singleton]
     public class MainMenuSceneUIProvider : MonoProvider<MainMenuSceneUI>

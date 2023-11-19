@@ -4,7 +4,6 @@ using _GameLogic.Gameplay.Galaxy.StarSystems;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 using Scellecs.Morpeh;
-using Scellecs.Morpeh.Systems;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,8 +13,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/Generation/" + nameof(GalaxyGenerationRequestProcessingSystem))]
-    public class GalaxyGenerationRequestProcessingSystem : UpdateSystem
+    public class GalaxyGenerationRequestProcessingSystem : AbstractSystem
     {
         private const float FluctuationRate = 0.25f;
         private const float DistanceBetweenSystems = 30f;
@@ -48,7 +46,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         
         private void GenerateGalaxy()
         {
-            var galaxy = Instantiate(_gameResourcesCatalog.GalaxyPrefab);
+            var galaxy = Object.Instantiate(_gameResourcesCatalog.GalaxyPrefab);
             var distanceFromCenter = DistanceBetweenSystems * 3;
             var t = 0f;
 
@@ -70,7 +68,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                 var yPos = Mathf.Sin(rad);
                 var pos = new Vector3(xPos, 0, yPos) * fluctuatedDistance * _configuration.Scale;
 
-                var starSystemProvider = Instantiate(
+                var starSystemProvider = Object.Instantiate(
                     _gameResourcesCatalog.StarSystemPrefab, pos, Quaternion.identity, galaxy.transform);
                 ref var starSystemComponent = ref starSystemProvider.Entity.GetComponent<StarSystem>();
                 starSystemComponent.Provider = starSystemProvider;
@@ -82,7 +80,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     var starEntity = World.CreateEntity();
                     starEntities[starIndex] = starEntity;
                     var starData = _starsCatalog.GetRandomStarData();
-                    var starProvider = Instantiate(starData.Prefab, starSystemProvider.transform);
+                    var starProvider = Object.Instantiate(starData.Prefab, starSystemProvider.transform);
                     World.Default.RemoveEntity(starProvider.Entity);
                     var starComponent = new Star
                     {

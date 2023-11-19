@@ -14,8 +14,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    [CreateAssetMenu(menuName = "ECS/Systems/Gameplay/Galaxy/StarSystems/" + nameof(StarSystemOpeningSystem))]
-    public class StarSystemOpeningSystem : UpdateSystem
+    public class StarSystemOpeningSystem : AbstractSystem
     {
         private FilterBuilder _stateMachineFilterBuilder;
         private Event<StarSystemClickEvent> _clickEvent;
@@ -50,7 +49,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             {
                                 var starComponent = starSystemComponent.StarEntities[i].GetComponent<Star>();
 
-                                var star = Instantiate(starComponent.Provider, starSystemObject.transform);
+                                var star = Object.Instantiate(starComponent.Provider, starSystemObject.transform);
                             }
 
                             for (int i = 0; i < starSystemComponent.PlanetEntities.Length; i++)
@@ -58,7 +57,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                                 var entity = starSystemComponent.PlanetEntities[i];
                                 var planetComponent = entity.GetComponent<Planet>();
                                 var position = entity.GetComponent<Position>().Value;
-                                var planet = Instantiate(planetComponent.Provider, position, Quaternion.identity,
+                                var planet = Object.Instantiate(planetComponent.Provider, position, Quaternion.identity,
                                     starSystemObject.transform);
                             }
 
