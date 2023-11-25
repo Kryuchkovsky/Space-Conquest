@@ -7,5 +7,6 @@ namespace _GameLogic.Gameplay.Time
     {
         public TimeSetting TimeSetting;
         public DateTime Date;
+        public bool IsPaused;
     }
 }

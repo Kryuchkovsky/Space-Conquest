@@ -22,6 +22,9 @@ namespace _GameLogic.Gameplay.Time.Systems
             foreach (var entity in _filterBuilder.Build())
             {
                 ref var gameTime = ref entity.GetComponent<GameTime>();
+                
+                if (gameTime.IsPaused) continue;
+                
                 _time += UnityEngine.Time.deltaTime * gameTime.TimeSetting.ProcessedDaysPerSecond;
 
                 if (_time >= 1)
