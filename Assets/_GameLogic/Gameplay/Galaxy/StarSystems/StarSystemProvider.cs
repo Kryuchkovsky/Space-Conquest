@@ -1,11 +1,12 @@
 using System;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Providers;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems
 {
-    public class StarSystemProvider : MonoProvider<StarSystem>, IPointerDownHandler
+    public class StarSystemProvider : MonoProvider<StarSystem>
     {
         public event Action OnStarSystemClicked;
 
@@ -30,7 +31,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
             });
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        private void OnMouseDown()
         {
             OnStarSystemClicked?.Invoke();
         }
