@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6363b2183066e8345a175093536ce78a, type: 3}
-  m_Name: Game Resources Catalog
+  m_Name: GameResourcesCatalog
   m_EditorClassIdentifier: 
   <GalaxyPrefab>k__BackingField: {fileID: 2295753496468297442, guid: 458e6a099663bf440870a70883364e1d,
     type: 3}

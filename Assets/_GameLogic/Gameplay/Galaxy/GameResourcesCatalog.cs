@@ -1,10 +1,9 @@
 using _GameLogic.Gameplay.Galaxy.StarSystems;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _GameLogic.Gameplay.Galaxy
 {
-    [CreateAssetMenu(menuName = "Configs/" + nameof(GameResourcesCatalog))]
+    [CreateAssetMenu(menuName = "Create GameResourcesCatalog", fileName = "GameResourcesCatalog")]
     public class GameResourcesCatalog : ScriptableObject
     {
         [field: SerializeField] public GalaxyProvider GalaxyPrefab { get; private set; }

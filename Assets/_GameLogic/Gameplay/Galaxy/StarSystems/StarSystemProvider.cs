@@ -1,8 +1,6 @@
 using System;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Providers;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems
 {

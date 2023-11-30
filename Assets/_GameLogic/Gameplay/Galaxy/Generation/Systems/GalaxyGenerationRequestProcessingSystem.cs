@@ -1,5 +1,6 @@
 ﻿using _GameLogic.Core;
 using _GameLogic.Extensions.Configs;
+using _GameLogic.Gameplay.Camera;
 using _GameLogic.Gameplay.Galaxy.StarSystems;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
@@ -20,6 +21,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         private const float DistanceBetweenPlanets = 20f;
         
         private Request<GalaxyGenerationRequest> _galaxyGenerationRequest;
+        private Request<GameCameraSwitchingRequest> _cameraSwitchingRequest;
         private GalaxyConfiguration _configuration;
         private GameResourcesCatalog _gameResourcesCatalog;
         private StarsCatalog _starsCatalog;
@@ -28,6 +30,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         public override void OnAwake()
         {
             _galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
+            _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
             _gameResourcesCatalog = ConfigManager.GetConfig<GameResourcesCatalog>();
             _starsCatalog = ConfigManager.GetConfig<StarsCatalog>();
             _planetsCatalog = ConfigManager.GetConfig<PlanetsCatalog>();
@@ -37,6 +40,11 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         {
             foreach (var request in _galaxyGenerationRequest.Consume())
             {
+                _cameraSwitchingRequest.Publish(new GameCameraSwitchingRequest
+                {
+                    CameraIndex = 0
+                }, true);
+                
                 _configuration = new GalaxyConfiguration(
                     "Galaxy", request.StarSystemsNumber, 
                     4, 1.05f, 5, 0.05f);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace _GameLogic.Gameplay.Galaxy.Generation
 {

@@ -1,5 +1,6 @@
 ﻿using _GameLogic.Core;
 using _GameLogic.Core.GameStates;
+using _GameLogic.Gameplay.Camera;
 using Scellecs.Morpeh;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine.SceneManagement;
@@ -12,12 +13,14 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
     public class StarSystemClosingSystem : AbstractSystem
     {
         private Event<StarSystemClosingButtonClickEvent> _clickEvent;
+        private Request<GameCameraSwitchingRequest> _cameraSwitchingRequest;
         private FilterBuilder _stateMachineFilterBuilder;
 
         public override void OnAwake()
         {
-            _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<PlayState>().Without<LoadingState>();
             _clickEvent = World.GetEvent<StarSystemClosingButtonClickEvent>();
+            _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
+            _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<PlayState>().Without<LoadingState>();
         }
 
         public override void OnUpdate(float deltaTime)
@@ -33,6 +36,10 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                         {
                             var starSystemScene = SceneManager.GetSceneByBuildIndex(3);
                             SceneManager.SetActiveScene(starSystemScene);
+                            _cameraSwitchingRequest.Publish(new GameCameraSwitchingRequest
+                            {
+                                CameraIndex = 0
+                            });
                         };
                     }
                 }
