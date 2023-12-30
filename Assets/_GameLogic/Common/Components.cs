@@ -2,7 +2,7 @@
 
 namespace _GameLogic.Common
 {
-    public struct GameCamera : IComponent
+    public struct GameCameraLink : IComponent
     {
         public UnityEngine.Camera Value;
     }

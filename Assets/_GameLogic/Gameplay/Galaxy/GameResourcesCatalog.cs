@@ -8,5 +8,6 @@ namespace _GameLogic.Gameplay.Galaxy
     {
         [field: SerializeField] public GalaxyProvider GalaxyPrefab { get; private set; }
         [field: SerializeField] public StarSystemProvider StarSystemPrefab { get; private set; }
+        [field: SerializeField] public StellarObjectLabel StellarObjectLabelPrefab { get; private set; }
     }
 }

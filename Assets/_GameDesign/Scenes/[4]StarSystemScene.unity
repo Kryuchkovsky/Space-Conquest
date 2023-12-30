@@ -296,8 +296,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 500
-  m_Range: 100
+  m_Intensity: 10000
+  m_Range: 500
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -495,6 +495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850838027}
+  - component: {fileID: 850838028}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -518,6 +519,20 @@ Transform:
   - {fileID: 811478919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850838028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850838026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041827df22abd224995ade296ce279da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
+  <RectTransform>k__BackingField: {fileID: 811478919}
 --- !u!1 &1315445434
 GameObject:
   m_ObjectHideFlags: 0

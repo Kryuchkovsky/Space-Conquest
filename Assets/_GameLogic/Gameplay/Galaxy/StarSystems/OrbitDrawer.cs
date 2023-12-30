@@ -15,7 +15,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
 
             for (int step = 0; step < _stepsAmount; step++)
             {
-                var circumferenceProgress = (float)step / _stepsAmount;
+                var circumferenceProgress = (float)step / (_stepsAmount - 1);
                 var radian = circumferenceProgress * 2 * Mathf.PI;
                 var xPos = Mathf.Cos(radian) * radius;
                 var yPos = Mathf.Sin(radian) * radius;

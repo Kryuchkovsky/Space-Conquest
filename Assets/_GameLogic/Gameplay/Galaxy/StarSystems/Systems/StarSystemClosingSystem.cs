@@ -1,6 +1,8 @@
 ﻿using _GameLogic.Core;
 using _GameLogic.Core.GameStates;
 using _GameLogic.Gameplay.Camera;
+using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
+using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
 using Scellecs.Morpeh;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine.SceneManagement;
@@ -15,12 +17,15 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
         private Event<StarSystemClosingButtonClickEvent> _clickEvent;
         private Request<GameCameraSwitchingRequest> _cameraSwitchingRequest;
         private FilterBuilder _stateMachineFilterBuilder;
+        private FilterBuilder _starSystemObjectFilterBuilder;
+        private FilterBuilder _planetViewFilterBuilder;
 
         public override void OnAwake()
         {
             _clickEvent = World.GetEvent<StarSystemClosingButtonClickEvent>();
             _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
             _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<PlayState>().Without<LoadingState>();
+            _starSystemObjectFilterBuilder = World.Filter.With<StarSystemObjectViewLink>();
         }
 
         public override void OnUpdate(float deltaTime)
@@ -40,6 +45,11 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             {
                                 CameraIndex = 0
                             });
+
+                            foreach (var entity in _starSystemObjectFilterBuilder.Build())
+                            {
+                                entity.RemoveComponent<StarSystemObjectViewLink>();
+                            }
                         };
                     }
                 }

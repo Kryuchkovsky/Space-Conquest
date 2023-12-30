@@ -1,9 +1,8 @@
-﻿using Scellecs.Morpeh.Providers;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems.Planets
 {
-    public class PlanetProvider : MonoProvider<Planet>
+    public class PlanetView : StarSystemObjectView
     {
         [field: SerializeField] public MeshRenderer PlanetMeshRenderer { get; private set; }
         [field: SerializeField] public MeshRenderer CloudsMeshRenderer { get; private set; }

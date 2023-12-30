@@ -5,7 +5,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation
 	public class GalaxyConfiguration
 	{
 		public string Name { get; private set; }
-		public int NumberOfStars { get; private set; }
+		public int NumberOfSystems { get; private set; }
 		public int NumberOfArms { get; private set; }
 		public float MaxArmOffset { get; private set; }
 		public float RotationFactor { get; private set; }
@@ -15,7 +15,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation
 		
 		public GalaxyConfiguration(
 			string name, 
-			int numberOfStarsStars = 30000, 
+			int numberOfSystemsSystems = 30000, 
 			int numberOfArms = 4, 
 			float maxArmOffset = 0.9f, 
 			float rotationFactor = 5f, 
@@ -23,7 +23,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation
 			float scale = 1)
 		{
 			Name = name;
-			NumberOfStars = numberOfStarsStars;
+			NumberOfSystems = numberOfSystemsSystems;
 			NumberOfArms = numberOfArms;
 			MaxArmOffset = maxArmOffset;
 			RotationFactor = rotationFactor;

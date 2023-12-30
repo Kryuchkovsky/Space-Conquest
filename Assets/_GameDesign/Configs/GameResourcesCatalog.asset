@@ -16,3 +16,5 @@ MonoBehaviour:
     type: 3}
   <StarSystemPrefab>k__BackingField: {fileID: 8927770785580465055, guid: c7a1af135e6329044a34be0d9d195b9b,
     type: 3}
+  <StellarObjectLabelPrefab>k__BackingField: {fileID: 6225685145040292791, guid: 80980a2d8619fab468a4508b061280be,
+    type: 3}

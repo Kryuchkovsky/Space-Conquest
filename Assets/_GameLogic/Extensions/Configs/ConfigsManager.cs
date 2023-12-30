@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _GameLogic.Extensions.Configs
 {
-    public class ConfigManager : Singleton<ConfigManager>
+    public class ConfigsManager : Singleton<ConfigsManager>
     {
         [SerializeField] private List<ScriptableObject> _configs;
 

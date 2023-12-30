@@ -1,4 +1,4 @@
-using Scellecs.Morpeh.Providers;
+using _GameLogic.Common;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace _GameLogic.Core.Loading
 {
     [Singleton]
-    public class LoadingSceneUIProvider : MonoProvider<LoadingSceneUI>
+    public class LoadingSceneUIProvider : ExtendedMonoProvider<LoadingSceneUI>
     {
         [field: SerializeField] public Image BackgroundImage { get; private set; }
         [field: SerializeField] public Image BarFillingImage { get; private set; }

@@ -9,7 +9,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Planets
     {
         [field: SerializeField] public List<Material> PlanetMaterials { get; private set; }
         [field: SerializeField] public List<Material> CloudsMaterials { get; private set; }
-        [field: SerializeField] public PlanetProvider Prefab { get; private set; }
+        [field: SerializeField] public PlanetView Prefab { get; private set; }
         [field: SerializeField] public PlanetType Type { get; private set; }
 
         public PlanetCatalogData(PlanetType type, int resourceModifier = 0) : base(resourceModifier, true)

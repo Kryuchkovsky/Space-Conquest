@@ -13,9 +13,12 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems
         public Entity[] StarEntities;
         public Entity[] PlanetEntities;
     }
-
-    public struct StarSystemClickEvent : IEventData
+    
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    public struct StarSystemObjectViewLink : IComponent
     {
-        public Entity Entity;
+        public StarSystemObjectView Value;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Scellecs.Morpeh;
-using Scellecs.Morpeh.Providers;
 using UnityEngine;
 
 namespace _GameLogic.Common
 {
-    public class GameCameraProvider : MonoProvider<GameCamera>
+    public class GameCameraProvider : ExtendedMonoProvider<GameCameraLink>
     {
         [SerializeField] private Camera _camera;
         [SerializeField, Min(0)] private int _index;
@@ -12,7 +11,7 @@ namespace _GameLogic.Common
         protected override void Initialize()
         {
             base.Initialize();
-            Entity.SetComponent(new GameCamera
+            Entity.SetComponent(new GameCameraLink
             {
                 Value = _camera
             });

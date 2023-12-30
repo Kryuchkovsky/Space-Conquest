@@ -1,5 +1,6 @@
 ﻿using _GameLogic.Gameplay.Galaxy.StarSystems.Planets;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Stars;
+using Scellecs.Morpeh;
 
 namespace _GameLogic.Gameplay.Galaxy
 {
@@ -7,8 +8,8 @@ namespace _GameLogic.Gameplay.Galaxy
 	{
 		public class StarSystemData
 		{
-			public StarProvider[] Stars { get; private set; }
-			public Planet[] Planets { get; private set; }
+			public StarView[] Stars { get; private set; }
+			public Entity[] Planets { get; private set; }
 		}
 		
 		public enum GalaxyType

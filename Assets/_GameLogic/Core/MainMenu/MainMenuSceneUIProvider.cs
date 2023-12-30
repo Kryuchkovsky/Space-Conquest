@@ -1,4 +1,5 @@
-﻿using Scellecs.Morpeh;
+﻿using _GameLogic.Common;
+using Scellecs.Morpeh;
 using Scellecs.Morpeh.Providers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 namespace _GameLogic.Core.MainMenu
 {
     [Singleton]
-    public class MainMenuSceneUIProvider : MonoProvider<MainMenuSceneUI>
+    public class MainMenuSceneUIProvider : ExtendedMonoProvider<MainMenuSceneUI>
     {
         [field: SerializeField] public Button NewGameButton { get; private set; }
 

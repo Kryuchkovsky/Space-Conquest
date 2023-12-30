@@ -1,4 +1,5 @@
-﻿using _GameLogic.Core;
+﻿using _GameLogic.Common;
+using _GameLogic.Core;
 using _GameLogic.Core.GameStates;
 using _GameLogic.Extensions;
 using _GameLogic.Gameplay.Camera;
@@ -44,23 +45,32 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             var starSystemScene = SceneManager.GetSceneByBuildIndex(4);
                             SceneManager.SetActiveScene(starSystemScene);
                             
-                            var starSystemComponent = starSystemEntity.GetComponent<StarSystem>();
+                            var starSystem = starSystemEntity.GetComponent<StarSystem>();
                             var layer = LayerMask.NameToLayer("StarSystem");
                             var starSystemObject = new GameObject($"[star_system_{starSystemEntity.ID}]");
 
-                            for (int i = 0; i < starSystemComponent.StarEntities.Length; i++)
+                            for (int i = 0; i < starSystem.StarEntities.Length; i++)
                             {
-                                var starComponent = starSystemComponent.StarEntities[i].GetComponent<Star>();
-                                var star = Object.Instantiate(starComponent.Provider, starSystemObject.transform);
+                                var entity = starSystem.StarEntities[i];
+                                var data = entity.GetComponent<StarData>().Value;
+                                var star = Object.Instantiate(data.Prefab, starSystemObject.transform);
+                                entity.SetComponent(new StarSystemObjectViewLink
+                                {
+                                    Value = star
+                                });
                             }
 
-                            for (int i = 0; i < starSystemComponent.PlanetEntities.Length; i++)
+                            for (int i = 0; i < starSystem.PlanetEntities.Length; i++)
                             {
-                                var entity = starSystemComponent.PlanetEntities[i];
-                                var planetComponent = entity.GetComponent<Planet>();
-                                var position = entity.GetComponent<Position>().Value;
-                                var planet = Object.Instantiate(planetComponent.Provider, position, Quaternion.identity, starSystemObject.transform);
+                                var entity = starSystem.PlanetEntities[i];
+                                var data = entity.GetComponent<PlanetData>().Value;
+                                var position = entity.GetComponent<PositionInStarSystemMap>().Value;
+                                var planet = Object.Instantiate(data.Prefab, position, Quaternion.identity, starSystemObject.transform);
                                 planet.OrbitDrawer.Draw(Vector3.zero);
+                                entity.SetComponent(new StarSystemObjectViewLink
+                                {
+                                    Value = planet
+                                });
                             }
 
                             starSystemObject.transform.SetLayerRecursively(layer);

@@ -20,15 +20,15 @@ namespace _GameLogic.Gameplay.Camera.Systems
 
         public override void OnAwake()
         {
-            _filterBuilder = World.Filter.With<GameCamera>().With<IsActiveFlag>();
-            _settings = ConfigManager.GetConfig<GameCameraSettings>();
+            _filterBuilder = World.Filter.With<GameCameraLink>().With<IsActiveFlag>();
+            _settings = ConfigsManager.GetConfig<GameCameraSettings>();
         }
 
         public override void OnUpdate(float deltaTime)
         {
             foreach (var entity in _filterBuilder.Build())
             {
-                var camera = entity.GetComponent<GameCamera>().Value;
+                var camera = entity.GetComponent<GameCameraLink>().Value;
                 var cameraPos = camera.transform.position;
                 var direction = new Vector2();
 

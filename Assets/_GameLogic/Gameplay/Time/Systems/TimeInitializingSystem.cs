@@ -14,7 +14,7 @@ namespace _GameLogic.Gameplay.Time.Systems
 
         public override void OnAwake()
         {
-            _timeSettings = ConfigManager.GetConfig<TimeSettings>();
+            _timeSettings = ConfigsManager.GetConfig<TimeSettings>();
             var entity = World.CreateEntity();
             entity.SetComponent(new GameTime
             {

@@ -16,7 +16,7 @@ namespace _GameLogic.Gameplay.Camera.Systems
         public override void OnAwake()
         {
             _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
-            _filterBuilder = World.Filter.With<GameCamera>().With<Index>();
+            _filterBuilder = World.Filter.With<GameCameraLink>().With<Index>();
         }
 
         public override void OnUpdate(float deltaTime)

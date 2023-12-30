@@ -6,7 +6,7 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Stars
     [Serializable]
     public class StarCatalogData : CelestialBodyCatalogData
     {
-        [field: SerializeField] public StarProvider Prefab { get; set; }
+        [field: SerializeField] public StarView Prefab { get; set; }
         [field: SerializeField] public StarType StarType { get; set; }
         [field: SerializeField] public float SpreadingRate { get; set; }
 

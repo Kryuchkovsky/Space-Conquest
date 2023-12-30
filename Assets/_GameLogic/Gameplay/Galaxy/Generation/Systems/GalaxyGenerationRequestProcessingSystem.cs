@@ -1,4 +1,5 @@
 ﻿using _GameLogic.Core;
+using _GameLogic.Extensions;
 using _GameLogic.Extensions.Configs;
 using _GameLogic.Gameplay.Camera;
 using _GameLogic.Gameplay.Galaxy.StarSystems;
@@ -31,9 +32,9 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         {
             _galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
             _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
-            _gameResourcesCatalog = ConfigManager.GetConfig<GameResourcesCatalog>();
-            _starsCatalog = ConfigManager.GetConfig<StarsCatalog>();
-            _planetsCatalog = ConfigManager.GetConfig<PlanetsCatalog>();
+            _gameResourcesCatalog = ConfigsManager.GetConfig<GameResourcesCatalog>();
+            _starsCatalog = ConfigsManager.GetConfig<StarsCatalog>();
+            _planetsCatalog = ConfigsManager.GetConfig<PlanetsCatalog>();
         }
 
         public override void OnUpdate(float deltaTime)
@@ -58,7 +59,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
             var distanceFromCenter = DistanceBetweenSystems * 3;
             var t = 0f;
 
-            for (int i = 0; i < _configuration.NumberOfStars; i++)
+            for (int i = 0; i < _configuration.NumberOfSystems; i++)
             {
                 var circleLenght = distanceFromCenter * 2f * Mathf.PI;
                 var delta = DistanceBetweenSystems * (1 + Random.Range(-FluctuationRate, FluctuationRate)) / circleLenght;
@@ -80,6 +81,12 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     _gameResourcesCatalog.StarSystemPrefab, pos, Quaternion.identity, galaxy.transform);
                 ref var starSystemComponent = ref starSystemProvider.Entity.GetComponent<StarSystem>();
                 starSystemComponent.Provider = starSystemProvider;
+
+                var systemName = ExtensionMethods.ConvertArabicNumberToRomanNumber(i);
+                starSystemProvider.Entity.SetComponent(new StellarObjectData
+                {
+                    Name = systemName
+                });
                 
                 var starEntities = new Entity[1];
                 
@@ -88,13 +95,18 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     var starEntity = World.CreateEntity();
                     starEntities[starIndex] = starEntity;
                     var starData = _starsCatalog.GetRandomStarData();
-                    var starProvider = Object.Instantiate(starData.Prefab, starSystemProvider.transform);
-                    World.Default.RemoveEntity(starProvider.Entity);
-                    var starComponent = new Star
+                    var starView = Object.Instantiate(starData.Prefab, starSystemProvider.transform);
+                    var starComponent = new StarData
                     {
-                        Provider = starData.Prefab
+                        Value = starData
                     };
                     starEntity.SetComponent(starComponent);
+                    
+                    var name = $"{systemName} {ExtensionMethods.ConvertIntToLetter(starIndex).ToLower()}";
+                    starEntity.SetComponent(new StellarObjectData
+                    {
+                        Name = name
+                    });
                 }
                 
                 starSystemComponent.StarEntities = starEntities; 
@@ -107,24 +119,31 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     var planetEntity = World.CreateEntity();
                     planetEntities[planetIndex] = planetEntity;
                     var planetData = _planetsCatalog.GetRandomData();
-                    var planetComponent = new Planet
+                    var planetDataComponent = new PlanetData
                     {
-                        Provider = planetData.Prefab
+                        Value = planetData
                     };
-                    planetEntity.SetComponent(planetComponent);
+                    planetEntity.SetComponent(planetDataComponent);
 
                     if (planetData.IsHabitable)
                     {
-                        planetEntity.AddComponent<IsHabitable>();
+                        planetEntity.AddComponent<HabitableFlag>();
                     }
                     
                     var pRad = Random.Range(0f, 360f) / Mathf.Rad2Deg;
-                    var planetPosition = new Position
+                    var fluctuation = 1 + Random.Range(-FluctuationRate, FluctuationRate);
+                    var position = new Vector3(Mathf.Cos(pRad), 0, Mathf.Sin(pRad)) * (planetIndex + 1);
+                    var planetPosition = new PositionInStarSystemMap
                     {
-                        Value = new Vector3(Mathf.Cos(pRad), 0, Mathf.Sin(pRad)) * (planetIndex + 1) *
-                                DistanceBetweenPlanets * (1 + Random.Range(-FluctuationRate, FluctuationRate))
+                        Value = position * DistanceBetweenPlanets * fluctuation
                     };
                     planetEntity.SetComponent(planetPosition);
+                    
+                    var name = $"{systemName} {ExtensionMethods.ConvertArabicNumberToRomanNumber(planetIndex + 1)}";
+                    planetEntity.SetComponent(new StellarObjectData
+                    {
+                        Name = name
+                    });
                 }
 
                 starSystemComponent.PlanetEntities = planetEntities;

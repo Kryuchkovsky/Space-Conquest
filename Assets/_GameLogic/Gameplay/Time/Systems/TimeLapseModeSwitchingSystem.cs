@@ -23,7 +23,7 @@ namespace _GameLogic.Gameplay.Time.Systems
             _timeAccelerationButtonClickEvent = World.GetEvent<TimeAccelerationButtonClickEvent>();
             _timeDecelerationButtonClickEvent = World.GetEvent<TimeDecelerationButtonClickEvent>();
             _timeStateSwitchingButtonClickEvent = World.GetEvent<TimeStateSwitchingButtonClickEvent>();
-            _timeSettings = ConfigManager.GetConfig<TimeSettings>();
+            _timeSettings = ConfigsManager.GetConfig<TimeSettings>();
         }
 
         public override void OnUpdate(float deltaTime)

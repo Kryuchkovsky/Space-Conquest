@@ -1,6 +1,7 @@
 ﻿using _GameLogic.Gameplay.Camera.Systems;
 using _GameLogic.Gameplay.Galaxy.Generation.Systems;
 using _GameLogic.Gameplay.Galaxy.StarSystems.Systems;
+using _GameLogic.Gameplay.Galaxy.Systems;
 using _GameLogic.Gameplay.Time.Systems;
 using Scellecs.Morpeh;
 using Scellecs.Morpeh.Systems;
@@ -25,6 +26,8 @@ namespace _GameLogic
             _systemsGroup.AddSystem(new GalaxyGenerationRequestProcessingSystem());
             _systemsGroup.AddSystem(new StarSystemOpeningSystem());
             _systemsGroup.AddSystem(new StarSystemClosingSystem());
+
+            _systemsGroup.AddSystem(new StarSystemSubjectLabelsHandlingSystem());
             
             World.AddSystemsGroup(4, _systemsGroup);
         }
