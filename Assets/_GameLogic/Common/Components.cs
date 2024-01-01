@@ -15,4 +15,9 @@ namespace _GameLogic.Common
     public struct IsActiveFlag : IComponent
     {
     }
+
+    public struct Boundaries : IComponent
+    {
+        public UnityEngine.Bounds Value;
+    }
 }

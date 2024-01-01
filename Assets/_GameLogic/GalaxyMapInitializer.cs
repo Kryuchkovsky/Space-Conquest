@@ -21,6 +21,7 @@ namespace _GameLogic
             _systemsGroup.AddSystem(new TimeLapseModeSwitchingSystem());
 
             _systemsGroup.AddSystem(new GameCameraSwitchingRequestProcessingSystem());
+            _systemsGroup.AddSystem(new GameCameraBoundsSettingsRequestProcessingSystem());
             _systemsGroup.AddSystem(new GameCameraManagementSystem());
 
             _systemsGroup.AddSystem(new GalaxyGenerationRequestProcessingSystem());

@@ -20,7 +20,7 @@ namespace _GameLogic.Gameplay.Camera.Systems
 
         public override void OnAwake()
         {
-            _filterBuilder = World.Filter.With<GameCameraLink>().With<IsActiveFlag>();
+            _filterBuilder = World.Filter.With<GameCameraLink>().With<Boundaries>().With<IsActiveFlag>();
             _settings = ConfigsManager.GetConfig<GameCameraSettings>();
         }
 
@@ -29,6 +29,7 @@ namespace _GameLogic.Gameplay.Camera.Systems
             foreach (var entity in _filterBuilder.Build())
             {
                 var camera = entity.GetComponent<GameCameraLink>().Value;
+                var bounds = entity.GetComponent<Boundaries>().Value;
                 var cameraPos = camera.transform.position;
                 var direction = new Vector2();
 
@@ -48,7 +49,10 @@ namespace _GameLogic.Gameplay.Camera.Systems
                 var yPosition = Mathf.Lerp(_settings.MinRange, _settings.MaxRange, _zoomT);
                 var sensitivity = Mathf.Lerp(_settings.CloseRangeSensitivity, _settings.LongRangeSensitivity, _zoomT);
                 var offset = direction.normalized * deltaTime * sensitivity;
-                camera.transform.position = new Vector3(cameraPos.x + offset.x, yPosition, cameraPos.z + offset.y);
+                var position = new Vector3(cameraPos.x + offset.x, yPosition, cameraPos.z + offset.y);
+                position.x = Mathf.Clamp(position.x, bounds.min.x, bounds.max.x);
+                position.z = Mathf.Clamp(position.z, bounds.min.z, bounds.max.z);
+                camera.transform.position = position;
             }
         }
     }

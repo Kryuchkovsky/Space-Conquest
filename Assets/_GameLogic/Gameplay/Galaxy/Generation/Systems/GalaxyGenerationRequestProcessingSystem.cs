@@ -1,4 +1,5 @@
-﻿using _GameLogic.Core;
+﻿using _GameLogic.Common;
+using _GameLogic.Core;
 using _GameLogic.Extensions;
 using _GameLogic.Extensions.Configs;
 using _GameLogic.Gameplay.Camera;
@@ -20,9 +21,8 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         private const float FluctuationRate = 0.25f;
         private const float DistanceBetweenSystems = 30f;
         private const float DistanceBetweenPlanets = 20f;
+        private const float BoundsMultiplier = 3f;
         
-        private Request<GalaxyGenerationRequest> _galaxyGenerationRequest;
-        private Request<GameCameraSwitchingRequest> _cameraSwitchingRequest;
         private GalaxyConfiguration _configuration;
         private GameResourcesCatalog _gameResourcesCatalog;
         private StarsCatalog _starsCatalog;
@@ -30,8 +30,6 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
 
         public override void OnAwake()
         {
-            _galaxyGenerationRequest = World.GetRequest<GalaxyGenerationRequest>();
-            _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
             _gameResourcesCatalog = ConfigsManager.GetConfig<GameResourcesCatalog>();
             _starsCatalog = ConfigsManager.GetConfig<StarsCatalog>();
             _planetsCatalog = ConfigsManager.GetConfig<PlanetsCatalog>();
@@ -39,9 +37,9 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
 
         public override void OnUpdate(float deltaTime)
         {
-            foreach (var request in _galaxyGenerationRequest.Consume())
+            foreach (var request in World.GetRequest<GalaxyGenerationRequest>().Consume())
             {
-                _cameraSwitchingRequest.Publish(new GameCameraSwitchingRequest
+                World.GetRequest<GameCameraSwitchingRequest>().Publish(new GameCameraSwitchingRequest
                 {
                     CameraIndex = 0
                 }, true);
@@ -146,8 +144,25 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     });
                 }
 
+                var radius = (planetEntities.Length + 1) * DistanceBetweenPlanets;
                 starSystemComponent.PlanetEntities = planetEntities;
+                starSystemProvider.Entity.SetComponent(new Boundaries
+                {
+                    Value = new Bounds(Vector3.zero, new Vector3(radius, 1 ,radius) * BoundsMultiplier)
+                });
             }
+
+            var bounds = new Bounds(
+                Vector3.zero, 
+                new Vector3(distanceFromCenter, 1, distanceFromCenter) * BoundsMultiplier);
+            galaxy.Entity.SetComponent(new Boundaries
+            {
+                Value = bounds
+            });
+            World.GetRequest<GameCameraBoundsSettingRequest>().Publish(new GameCameraBoundsSettingRequest
+            {
+                Bounds = bounds
+            }, true);
         }
     }
 }

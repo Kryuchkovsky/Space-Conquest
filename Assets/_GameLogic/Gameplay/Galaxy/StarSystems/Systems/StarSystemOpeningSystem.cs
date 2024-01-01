@@ -18,13 +18,11 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
     public class StarSystemOpeningSystem : AbstractSystem
     {
         private Event<StarSystemClickEvent> _clickEvent;
-        private Request<GameCameraSwitchingRequest> _cameraSwitchingRequest;
         private FilterBuilder _stateMachineFilterBuilder;
 
         public override void OnAwake()
         {
             _clickEvent = World.GetEvent<StarSystemClickEvent>();
-            _cameraSwitchingRequest = World.GetRequest<GameCameraSwitchingRequest>();
             _stateMachineFilterBuilder = World.Filter.With<StateMachine>().With<PlayState>().Without<LoadingState>();
         }
 
@@ -74,10 +72,14 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             }
 
                             starSystemObject.transform.SetLayerRecursively(layer);
-                            _cameraSwitchingRequest.Publish(new GameCameraSwitchingRequest
+                            World.GetRequest<GameCameraSwitchingRequest>().Publish(new GameCameraSwitchingRequest
                             {
                                 CameraIndex = 1
                             });
+                            World.GetRequest<GameCameraBoundsSettingRequest>().Publish(new GameCameraBoundsSettingRequest
+                            {
+                                Bounds = starSystemEntity.GetComponent<Boundaries>().Value
+                            }, true);
                         };
                     }
                 }
