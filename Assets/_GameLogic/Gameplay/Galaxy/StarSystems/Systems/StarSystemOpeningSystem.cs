@@ -80,6 +80,8 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             {
                                 Bounds = starSystemEntity.GetComponent<Boundaries>().Value
                             }, true);
+                            
+                            GalaxyUIContainer.Instance.gameObject.SetActive(false);
                         };
                     }
                 }

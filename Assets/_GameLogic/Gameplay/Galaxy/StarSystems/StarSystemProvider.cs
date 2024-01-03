@@ -1,10 +1,9 @@
 using System;
-using _GameLogic.Common;
 using Scellecs.Morpeh;
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems
 {
-    public class StarSystemProvider : ExtendedMonoProvider<StarSystem>
+    public class StarSystemProvider : GalaxyObjectProvider<StarSystem>
     {
         public event Action OnStarSystemClicked;
 

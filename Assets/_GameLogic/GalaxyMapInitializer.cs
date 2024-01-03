@@ -25,10 +25,11 @@ namespace _GameLogic
             _systemsGroup.AddSystem(new GameCameraManagementSystem());
 
             _systemsGroup.AddSystem(new GalaxyGenerationRequestProcessingSystem());
+            _systemsGroup.AddSystem(new GalaxyObjectLabelsHandlingSystem());
+            
             _systemsGroup.AddSystem(new StarSystemOpeningSystem());
             _systemsGroup.AddSystem(new StarSystemClosingSystem());
-
-            _systemsGroup.AddSystem(new StarSystemSubjectLabelsHandlingSystem());
+            _systemsGroup.AddSystem(new StarSystemObjectLabelsHandlingSystem());
             
             World.AddSystemsGroup(4, _systemsGroup);
         }

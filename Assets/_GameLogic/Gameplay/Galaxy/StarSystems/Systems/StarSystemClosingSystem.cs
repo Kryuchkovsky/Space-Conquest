@@ -49,7 +49,14 @@ namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
                             foreach (var entity in _starSystemObjectFilterBuilder.Build())
                             {
                                 entity.RemoveComponent<StarSystemObjectViewLink>();
+
+                                if (entity.Has<StellarObjectLabelLink>())
+                                {
+                                    entity.RemoveComponent<StellarObjectLabelLink>();
+                                }
                             }
+                            
+                            GalaxyUIContainer.Instance.gameObject.SetActive(true);
                         };
                     }
                 }

@@ -17,6 +17,10 @@ namespace _GameLogic.Gameplay.Galaxy
     {
     }
     
+    public struct GalaxyObjectFlag : IComponent
+    {
+    }
+    
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

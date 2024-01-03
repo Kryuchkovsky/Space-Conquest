@@ -57,7 +57,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
             var distanceFromCenter = DistanceBetweenSystems * 3;
             var t = 0f;
 
-            for (int i = 0; i < _configuration.NumberOfSystems; i++)
+            for (int systemIndex = 0; systemIndex < _configuration.NumberOfSystems; systemIndex++)
             {
                 var circleLenght = distanceFromCenter * 2f * Mathf.PI;
                 var delta = DistanceBetweenSystems * (1 + Random.Range(-FluctuationRate, FluctuationRate)) / circleLenght;
@@ -80,7 +80,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                 ref var starSystemComponent = ref starSystemProvider.Entity.GetComponent<StarSystem>();
                 starSystemComponent.Provider = starSystemProvider;
 
-                var systemName = ExtensionMethods.ConvertArabicNumberToRomanNumber(i);
+                var systemName = ExtensionMethods.ConvertArabicNumberToRomanNumber(systemIndex + 1);
                 starSystemProvider.Entity.SetComponent(new StellarObjectData
                 {
                     Name = systemName
@@ -100,7 +100,7 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     };
                     starEntity.SetComponent(starComponent);
                     
-                    var name = $"{systemName} {ExtensionMethods.ConvertIntToLetter(starIndex).ToLower()}";
+                    var name = $"{systemName} {ExtensionMethods.ConvertIntToLetter(starIndex + 1).ToLower()}";
                     starEntity.SetComponent(new StellarObjectData
                     {
                         Name = name

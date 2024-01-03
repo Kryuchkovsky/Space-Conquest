@@ -37,23 +37,27 @@ namespace _GameLogic.Core.GameStates.Systems
                         };
                     }
                     
-                    if (!SceneManager.GetSceneByBuildIndex(3).isLoaded)
-                    {
-                        var galaxyMapSceneLoadingOperation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
-                        galaxyMapSceneLoadingOperation.completed += _ =>
-                        {
-                            var galaxyMapScene = SceneManager.GetSceneByBuildIndex(3);
-                            SceneManager.SetActiveScene(galaxyMapScene);
-                            var playState = new PlayState();
-                            playState.GalaxySceneIsLoaded = true;
-                            entity.SetComponent(playState);
-                        };
-                    }
-                    
                     if (!SceneManager.GetSceneByBuildIndex(1).isLoaded)
                     {
                         var loadingSceneLoadingOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-                        loadingSceneLoadingOperation.completed += _ => { };
+                        loadingSceneLoadingOperation.completed += _ =>
+                        {
+                            var loadingScene = SceneManager.GetSceneByBuildIndex(1);
+                            SceneManager.SetActiveScene(loadingScene);
+                            
+                            if (!SceneManager.GetSceneByBuildIndex(3).isLoaded)
+                            {
+                                var galaxyMapSceneLoadingOperation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+                                galaxyMapSceneLoadingOperation.completed += _ =>
+                                {
+                                    var galaxyMapScene = SceneManager.GetSceneByBuildIndex(3);
+                                    SceneManager.SetActiveScene(galaxyMapScene);
+                                    var playState = new PlayState();
+                                    playState.GalaxySceneIsLoaded = true;
+                                    entity.SetComponent(playState);
+                                };
+                            }
+                        };
                         var loadingState = new LoadingState();
                         loadingState.SceneIsLoaded = true;
                         entity.SetComponent(loadingState);
