@@ -18,19 +18,16 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     public class GalaxyGenerationRequestProcessingSystem : AbstractSystem
     {
-        private const float FluctuationRate = 0.25f;
-        private const float DistanceBetweenSystems = 30f;
-        private const float DistanceBetweenPlanets = 20f;
-        private const float BoundsMultiplier = 3f;
-        
         private GalaxyConfiguration _configuration;
         private GameResourcesCatalog _gameResourcesCatalog;
+        private GalaxySettings _galaxySettings;
         private StarsCatalog _starsCatalog;
         private PlanetsCatalog _planetsCatalog;
 
         public override void OnAwake()
         {
             _gameResourcesCatalog = ConfigsManager.GetConfig<GameResourcesCatalog>();
+            _galaxySettings = ConfigsManager.GetConfig<GalaxySettings>();
             _starsCatalog = ConfigsManager.GetConfig<StarsCatalog>();
             _planetsCatalog = ConfigsManager.GetConfig<PlanetsCatalog>();
         }
@@ -54,26 +51,26 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
         private void GenerateGalaxy()
         {
             var galaxy = Object.Instantiate(_gameResourcesCatalog.GalaxyPrefab);
-            var distanceFromCenter = DistanceBetweenSystems * 3;
+            var distanceFromCenter = _galaxySettings.DistanceBetweenSystems * _galaxySettings.GalacticCoreRadiusFactor;
             var t = 0f;
 
             for (int systemIndex = 0; systemIndex < _configuration.NumberOfSystems; systemIndex++)
             {
                 var circleLenght = distanceFromCenter * 2f * Mathf.PI;
-                var delta = DistanceBetweenSystems * (1 + Random.Range(-FluctuationRate, FluctuationRate)) / circleLenght;
+                var delta = _galaxySettings.DistanceBetweenSystems * _galaxySettings.GetFluctuationMultiplier() / circleLenght;
                 t += delta;
 
                 if (t >= 1)
                 {
                     t -= 1;
-                    distanceFromCenter += DistanceBetweenSystems;
+                    distanceFromCenter += _galaxySettings.DistanceBetweenSystems;
                 }
 
-                var fluctuatedDistance = distanceFromCenter + DistanceBetweenSystems * Random.Range(-FluctuationRate, FluctuationRate);
+                var fluctuatedDistance = distanceFromCenter + _galaxySettings.DistanceBetweenSystems * (1 - _galaxySettings.GetFluctuationMultiplier());
                 var rad = Mathf.Lerp(0, 360, t) / Mathf.Rad2Deg;
                 var xPos = Mathf.Cos(rad);
                 var yPos = Mathf.Sin(rad);
-                var pos = new Vector3(xPos, 0, yPos) * fluctuatedDistance * _configuration.Scale;
+                var pos = new Vector3(xPos, 0, yPos) * fluctuatedDistance;
 
                 var starSystemProvider = Object.Instantiate(
                     _gameResourcesCatalog.StarSystemPrefab, pos, Quaternion.identity, galaxy.transform);
@@ -129,11 +126,10 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     }
                     
                     var pRad = Random.Range(0f, 360f) / Mathf.Rad2Deg;
-                    var fluctuation = 1 + Random.Range(-FluctuationRate, FluctuationRate);
                     var position = new Vector3(Mathf.Cos(pRad), 0, Mathf.Sin(pRad)) * (planetIndex + 1);
                     var planetPosition = new PositionInStarSystemMap
                     {
-                        Value = position * DistanceBetweenPlanets * fluctuation
+                        Value = position * _galaxySettings.DistanceBetweenPlanets * _galaxySettings.GetFluctuationMultiplier()
                     };
                     planetEntity.SetComponent(planetPosition);
                     
@@ -144,17 +140,17 @@ namespace _GameLogic.Gameplay.Galaxy.Generation.Systems
                     });
                 }
 
-                var radius = (planetEntities.Length + 1) * DistanceBetweenPlanets;
+                var radius = (planetEntities.Length + 1) * _galaxySettings.DistanceBetweenPlanets;
                 starSystemComponent.PlanetEntities = planetEntities;
                 starSystemProvider.Entity.SetComponent(new Boundaries
                 {
-                    Value = new Bounds(Vector3.zero, new Vector3(radius, 1 ,radius) * BoundsMultiplier)
+                    Value = new Bounds(Vector3.zero, new Vector3(radius, 1 ,radius) * _galaxySettings.GalaxyBoundsMultiplier)
                 });
             }
 
             var bounds = new Bounds(
                 Vector3.zero, 
-                new Vector3(distanceFromCenter, 1, distanceFromCenter) * BoundsMultiplier);
+                new Vector3(distanceFromCenter, 1, distanceFromCenter) * _galaxySettings.GalaxyBoundsMultiplier);
             galaxy.Entity.SetComponent(new Boundaries
             {
                 Value = bounds
