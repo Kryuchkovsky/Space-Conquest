@@ -2,16 +2,15 @@
 
 namespace _GameLogic.Gameplay.Galaxy.StarSystems.Systems
 {
+    // TODO: implement logic of connecting closest systems
     public class HyperlaneCreationSystem : AbstractSystem
     {
         public override void OnAwake()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void OnUpdate(float deltaTime)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
